@@ -29,6 +29,8 @@ var TESTJS = (function() {
 		addElement(test);
 	};
 
+	var test = function
+
 	var TESTJS = function() {}
 
 	TESTJS.prototype = {
