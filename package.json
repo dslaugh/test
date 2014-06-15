@@ -1,0 +1,16 @@
+{
+    "name": "FindSuperman",
+    "version": "0.0.1",
+    "author": "David Slaugh",
+    "description": "Code designed to find the elusive red blue blur",
+    "dependencies": {
+        "underscore": "1.6.x"
+    },
+    "devDependencies": {
+        "browserify": "latest"
+    },
+    "scripts": {
+        "build-js": "browserify js/browserify_test.js > js/findem.js -d",
+        "watch-js": "watchify js/browserify_test.js -o js/findem.js -dv"
+    }
+}

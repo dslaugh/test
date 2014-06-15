@@ -16,9 +16,3 @@ App.Calc = (function() {
 		multiply: multiply
 	};
 })();
-
-
-
-var numbers = [1,2,3,5,8,13];
-var result = numbers.reduce(App.Calc.multiply, 1);
-console.log(result);
