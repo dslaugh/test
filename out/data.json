@@ -1,0 +1,147 @@
+{
+    "project": {},
+    "files": {
+        "js/calc.js": {
+            "name": "js/calc.js",
+            "modules": {},
+            "classes": {
+                "App.Calc": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "js/element.js": {
+            "name": "js/element.js",
+            "modules": {},
+            "classes": {
+                "App.Element": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "js/jqtest.js": {
+            "name": "js/jqtest.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "App.Calc": {
+            "name": "App.Calc",
+            "shortname": "App.Calc",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "js/calc.js",
+            "line": 2,
+            "description": "Utility methods for calculating numbers",
+            "static": 1
+        },
+        "App.Element": {
+            "name": "App.Element",
+            "shortname": "App.Element",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "js/element.js",
+            "line": 3,
+            "description": "Utility class for creating DOM elements",
+            "static": 1
+        }
+    },
+    "classitems": [
+        {
+            "file": "js/calc.js",
+            "line": 11,
+            "description": "Adds two numbers together",
+            "itemtype": "method",
+            "name": "add",
+            "params": [
+                {
+                    "name": "num1",
+                    "description": "First number",
+                    "type": "String"
+                },
+                {
+                    "name": "num2",
+                    "description": "Second number",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Sum of two numbers",
+                "type": "Integer"
+            },
+            "class": "App.Calc"
+        },
+        {
+            "file": "js/calc.js",
+            "line": 23,
+            "description": "Multiplies two numbers together",
+            "itemtype": "method",
+            "name": "multiply",
+            "params": [
+                {
+                    "name": "num1",
+                    "description": "First number",
+                    "type": "String"
+                },
+                {
+                    "name": "num2",
+                    "description": "Second number",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The result of two numbers multiplied together",
+                "type": "Integer"
+            },
+            "class": "App.Calc"
+        },
+        {
+            "file": "js/element.js",
+            "line": 13,
+            "description": "Creates a DOM element",
+            "itemtype": "method",
+            "name": "e",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "Element options.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "An HTML element",
+                "type": "HTMLElement"
+            },
+            "class": "App.Element"
+        },
+        {
+            "file": "js/jqtest.js",
+            "line": 3984,
+            "description": "Utility function for retrieving the text value of an array of DOM nodes",
+            "params": [
+                {
+                    "name": "elem",
+                    "description": "",
+                    "type": "Array|Element"
+                }
+            ],
+            "class": ""
+        }
+    ],
+    "warnings": [
+        {
+            "message": "Missing item type\nUtility function for retrieving the text value of an array of DOM nodes",
+            "line": " js/jqtest.js:3984"
+        }
+    ]
+}

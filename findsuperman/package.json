@@ -1,0 +1,15 @@
+{
+    "name": "FindSuperman",
+    "version": "0.0.1",
+    "author": "David Slaugh",
+    "description": "Code designed to find the elusive red blue blur",
+    "dependencies": {
+        "underscore": "1.6.x"
+    },
+    "devDependencies": {
+        "browserify": "latest",
+        "grunt": "~0.4.0",
+        "grunt-browserify": "latest",
+        "grunt-contrib-watch": "latest"
+    }
+}

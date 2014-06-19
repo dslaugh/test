@@ -1,8 +1,22 @@
 var App = {};
 
+/**
+    Utility class for creating DOM elements
+
+    @class App.Element
+    @static
+*/
+
 App.Element = (function(document) {
 	'use strict';
 
+    /**
+        Creates a DOM element
+
+        @method e
+        @param {Object} options Element options.
+        @return {HTMLElement} An HTML element        
+    */
 	var e = function(options) {
 
 		var el = document.createElement(options.type);
