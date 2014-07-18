@@ -31,8 +31,48 @@
 	<script src="//code.jquery.com/qunit/qunit-1.14.0.js"></script>
 	<script src="/js/main.js"></script>
 	<script src="/js/tests/tests.js"></script>
-	 -->
 	<script src="/js/element.js"></script> 
 	<script src="/js/calc.js"></script> 
+	 -->
+	<script>
+		var multiplyBy = function(num) {
+			return function(num2) {
+				return num * num2;
+			};
+		};
+
+		var multiplyBy2 = multiplyBy(2);
+		console.log(multiplyBy2(4));
+
+		// var x = multiplyBy(4);
+		[2,3,4,5].map(function(num) {
+			var result = multiplyBy(4)(num);
+			console.log(result);
+		});
+
+
+
+		var searchFor = function(search) {
+			return function(arr) {
+				if (arr.indexOf(search) > -1) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+
+		var testArray = ['one', 'four', 'three'];
+
+		var searchForTwo = searchFor('two');
+
+		var searchResults = searchForTwo(testArray);
+
+		console.log(searchResults);
+		
+		var searchResults2 = searchFor('three')(testArray);
+		console.log(searchResults2);
+
+	</script>
 </body>
 </html>
