@@ -35,43 +35,65 @@
 	<script src="/js/calc.js"></script> 
 	 -->
 	<script>
-		var multiplyBy = function(num) {
-			return function(num2) {
-				return num * num2;
-			};
+		var observer = function(changes) {
+			changes.forEach(function(change) {
+				console.log(change);
+			});
 		};
 
-		var multiplyBy2 = multiplyBy(2);
-		console.log(multiplyBy2(4));
+		var myModel = {
+			a: [],
+			add: function(item) {
+				Object.getNotifier(this).notify({
+					type: 'update',	
+					name: 'a',
+					oldValue: this.a
+				});
+				this.a.push(item);
+			}
+		};
 
-		// var x = multiplyBy(4);
-		[2,3,4,5].map(function(num) {
-			var result = multiplyBy(4)(num);
-			console.log(result);
+
+		Object.observe(myModel, observer);
+
+		var myArray = [];
+		Array.observe(myArray, function(changes) {
+			console.log(myArray);
 		});
 
 
 
-		var searchFor = function(search) {
-			return function(arr) {
-				if (arr.indexOf(search) > -1) {
-					return true;
-				} else {
-					return false;
-				}
-			}
+
+		var SuperHuman = function(name, superPower) {
+			this.name = name;
+			this.superPower = superPower;
+		};
+
+		SuperHuman.prototype.usePower = function() {
+			console.log(this.superPower + "!");
+		};
+
+		var banshee = new SuperHuman('Silver Banshee', 'sonic wail');
+
+		banshee.usePower();
+
+		var SuperHero = function(name, superPower) {
+			SuperHuman.call(this, name, superPower);
+			this.allegiance = 'Good';
 		}
 
-		var testArray = ['one', 'four', 'three'];
+		SuperHero.prototype = new SuperHuman();
 
-		var searchForTwo = searchFor('two');
+		SuperHero.prototype.saveTheDay = function() {
+			console.log(this.name + ' saved the day!');
+		};
 
-		var searchResults = searchForTwo(testArray);
+		var marvel = new SuperHero('Captain Marvel', 'magic');
 
-		console.log(searchResults);
-		
-		var searchResults2 = searchFor('three')(testArray);
-		console.log(searchResults2);
+		marvel.usePower();
+		marvel.saveTheDay();
+
+
 
 	</script>
 </body>
