@@ -46,4 +46,4 @@ App.Calc = (function() {
         pow: pow
 	};
 })();
-module.exports = App; 
+module.exports = App;
