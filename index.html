@@ -31,8 +31,70 @@
 	<script src="//code.jquery.com/qunit/qunit-1.14.0.js"></script>
 	<script src="/js/main.js"></script>
 	<script src="/js/tests/tests.js"></script>
-	 -->
 	<script src="/js/element.js"></script> 
 	<script src="/js/calc.js"></script> 
+	 -->
+	<script>
+		var observer = function(changes) {
+			changes.forEach(function(change) {
+				console.log(change);
+			});
+		};
+
+		var myModel = {
+			a: [],
+			add: function(item) {
+				Object.getNotifier(this).notify({
+					type: 'update',	
+					name: 'a',
+					oldValue: this.a
+				});
+				this.a.push(item);
+			}
+		};
+
+
+		Object.observe(myModel, observer);
+
+		var myArray = [];
+		Array.observe(myArray, function(changes) {
+			console.log(myArray);
+		});
+
+
+
+
+		var SuperHuman = function(name, superPower) {
+			this.name = name;
+			this.superPower = superPower;
+		};
+
+		SuperHuman.prototype.usePower = function() {
+			console.log(this.superPower + "!");
+		};
+
+		var banshee = new SuperHuman('Silver Banshee', 'sonic wail');
+
+		banshee.usePower();
+
+		var SuperHero = function(name, superPower) {
+			SuperHuman.call(this, name, superPower);
+			this.allegiance = 'Good';
+		}
+
+		SuperHero.prototype = new SuperHuman();
+
+		SuperHero.prototype.saveTheDay = function() {
+			console.log(this.name + ' saved the day!');
+		};
+
+		var marvel = new SuperHero('Captain Marvel', 'magic');
+
+		marvel.usePower();
+		marvel.saveTheDay();
+
+
+
+	</script>
 </body>
 </html>
