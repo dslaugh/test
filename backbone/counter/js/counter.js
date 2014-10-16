@@ -68,8 +68,8 @@
 			var countsCollection = new Counter.Collections.Count(counts);
 			var countsView = new Counter.Views.Counts({collection: countsCollection});
 			var countButton = new Counter.Views.CountButton();
-			$(document.body).append(countButton.render().el);
-			$(document.body).append(countsView.render().el);
+			$('#LeftCol').append(countButton.render().el);
+			$('#TodayCounts').append(countsView.render().el);
 		}
     });
     
