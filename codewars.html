@@ -1,0 +1,214 @@
+<html>
+<head>
+	<title>Code wars</title>
+</head>
+<body>
+
+
+<script>
+var numberToOrdinal = function(num) {
+	var ord;
+	var lastTwo = num.toString(10).slice(-2);
+
+	var teenExceptions = ['11','12','13'];
+	if (teenExceptions.indexOf(lastTwo) > -1) {
+		ord = 'th';
+	} else {
+		var lastOne = lastTwo.slice(-1);
+		if (lastOne === '1') {
+			ord = 'st';
+		} else if (lastOne === '2') {
+			ord = 'nd';
+		} else if (lastOne === '3') {
+			ord = 'rd';
+		} else {
+			ord = 'th';
+		}
+	}
+	return num === 0 ? '0' : num + ord;
+};
+
+var maxSequence = function(arr) {
+	var maxToHere = 0;
+	var maxSoFar = 0;
+	arr.forEach(function(num) {
+		maxToHere = Math.max(0, maxToHere + num);
+		maxSoFar = Math.max(maxSoFar, maxToHere);
+	});
+	return maxSoFar;
+};
+
+var hexStringToRGB = function(hexString) {
+	var rgb = hexString.match(/^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+	return {
+		r: parseInt(rgb[1], 16),
+		g: parseInt(rgb[2], 16),
+		b: parseInt(rgb[3], 16)
+	};
+}
+
+var solution = function(digits){
+	var maxPos = digits.length - 5;
+	var highestNum = 0;
+	for (var i = 0; i <= maxPos; i++) {
+		highestNum = Math.max(highestNum, parseInt(digits.slice(i, i+5)));
+	}
+	return highestNum;
+};
+
+var numberFn = function(num) {
+	return function(fn) {
+		if (fn) {
+			return fn(num);
+		} else {
+			return num;
+		}
+	}
+};
+var zero = numberFn(0);
+var one = numberFn(1);
+var two = numberFn(2);
+var three = numberFn(3);
+var four = numberFn(4);
+var five = numberFn(5);
+var six = numberFn(6);
+var seven = numberFn(7);
+var eight = numberFn(8);
+var nine = numberFn(9);
+var plus = function(num1) {
+	return function(num2) {
+		return num2 + num1;
+	}
+};
+var minus = function(num1) {
+	return function(num2) {
+		return num2 - num1;
+	}
+};
+var times = function(num1) {
+	return function(num2) {
+		return num2 * num1;
+	}
+};
+var dividedBy = function(num1) {
+	return function(num2) {
+		return num2 / num1;
+	}
+};
+
+
+var cakes = function(recipe, available) {
+	var recipeItems = Object.keys(recipe);
+	var availableItems = Object.keys(available);
+	var maxCakes = Infinity;
+	recipeItems.forEach(function(item) {
+		if (!available[item]) {
+			available[item] = 0;
+		}
+		maxCakes = Math.min(maxCakes, Math.floor(available[item] / recipe[item]));
+	});
+	return maxCakes;
+};
+
+function curry(fn, n) {
+  // If `n` argument was omitted, use the function .length property.
+  if (typeof n !== 'number') {
+    n = fn.length;
+  }
+
+  function getCurriedFn(prev) {
+    return function(arg) {
+      // Concat the just-specified argument with the array of
+      // previously-specified arguments.
+      var args = prev.concat(arg);
+      if (args.length < n) {
+        // Not all arguments have been satisfied yet, so return a curried
+        // version of the original function.
+        return getCurriedFn(args);
+      } else {
+        // Otherwise, invoke the original function with the arguments and
+        // return its value.
+        return fn.apply(this, args);
+      }
+    };
+  }
+
+  // Return a curried version of the original function.
+  return getCurriedFn([]);
+}
+
+var curry2 = function(fn, n) {
+	if (typeof fn !== 'number') {
+		n = fn.length;
+	}
+	return n;
+};
+
+
+var add = function(a, b) {
+	return a + b;
+};
+
+function Jar() {
+  this.juices = {};
+  this.total = 0;
+}
+
+Jar.prototype.add = function(amount, type) {
+	if (type in this.juices) {
+		this.juices[type] = this.juices[type] + amount
+	} else {
+		this.juices[type] = amount;
+	}
+	this.total = this.total + amount;
+};
+
+Jar.prototype.pourOut = function(amount) {
+	if (amount <= 0) {
+		return;
+	}
+	var reducePercent = 1 - (amount / this.total);
+	this.total = this.total - amount;
+	Object.keys(this.juices).forEach(function(type) {
+		this.juices[type] = this.juices[type] - (this.juices[type] * reducePercent);
+	}, this);
+};
+
+Jar.prototype.getTotalAmount = function() {
+	return this.total;
+};
+
+Jar.prototype.getConcentration = function(type) {
+	var juice = this.juices[type] || 0;
+	return this.total > 0 ? juice / this.total : 0;
+};
+
+
+var fibonacci = (function() {
+	var memo = [0,1];
+	return function(n) {
+		var result = memo[n];
+	    if (typeof result !== 'number') {
+	    	result = fibonacci(n - 1) + fibonacci(n - 2);
+	    	memo[n] = result;
+	    }
+	    return result;
+	};
+})();
+
+// fibonacci = (function() {
+// 	var memo = [0,1];
+// 	var fib = function(n) {
+// 		var result = memo[n];
+// 		if (typeof result !== 'number') {
+// 			result = fib(n - 1) + fib(n - 2);
+// 			memo[n] = result;
+// 		}
+// 		return result;
+// 	}
+// 	return fib;
+// })();
+
+</script>
+</body>
+</html>
