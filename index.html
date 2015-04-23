@@ -21,11 +21,26 @@
 			border: 1px solid red;
 			position: absolute;
 		}
+		.shape {
+			position: relative;
+			display: inline-block;
+			border-color: transparent transparent red transparent;
+			border-style: solid;
+			border-width: 0 0 30px 30px;
+			box-shadow: 5px 5px 0px 0px green, 10px 10px 0px 0px blue;
+		}
+		/*.shape:before {
+			position: absolute;
+			border-color: blue;
+			border-style: solid;
+			border-width: 30px 30px 30px 30px;
+		}*/
 	</style>
 </head>
 <body>
 	<div id='main_container'></div>
-
+	<div class="shape"></div>
+	<ul id="peopleList"></ul>
 	<!-- <div id="qunit"></div>
 	<div id="qunit-fixture"></div>
 	<script src="//code.jquery.com/qunit/qunit-1.14.0.js"></script>
@@ -94,6 +109,43 @@
 		marvel.saveTheDay();
 
 
+		function curry(fn) {
+			var arity = fn.length;
+
+			return given([]);
+
+			function given(argsSoFar) {
+				return function helper() {
+					var updatedArgsSoFar = argsSoFar.concat(Array.prototype.slice.call(arguments, 0));
+					if (updatedArgsSoFar.length >= arity) {
+						return fn.apply(this, updatedArgsSoFar);
+					} else {
+						return given(updatedArgsSoFar);
+					}
+				};
+			}
+		}
+
+		function add(a,b) {
+			return a + b;
+		}
+
+		var curriedAdd = curry(add);
+
+		var addTwo = curriedAdd(2);
+		var four = addTwo(2);
+
+		var people = [
+			{id: 1, name: 'David'},
+			{id: 2, name: 'Steve'},
+			{id: 3, name: 'Scott'}
+		];
+
+		function makeListItem(person) {
+			return '<li id="'+person.id+'">'+person.name+'</li>';
+		}
+		var listItemedPeople = people.map(makeListItem).join('');
+		document.querySelector('#peopleList').innerHTML = listItemedPeople;
 
 
 

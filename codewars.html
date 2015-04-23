@@ -47,6 +47,10 @@ var hexStringToRGB = function(hexString) {
 	};
 }
 
+var rgbToHex = function(r, g, b) {
+	return Number(r).toString(16) + Number(g).toString(16) + Number(b).toString(16);
+}
+
 var solution = function(digits){
 	var maxPos = digits.length - 5;
 	var highestNum = 0;
@@ -196,18 +200,490 @@ var fibonacci = (function() {
 	};
 })();
 
-// fibonacci = (function() {
-// 	var memo = [0,1];
-// 	var fib = function(n) {
-// 		var result = memo[n];
-// 		if (typeof result !== 'number') {
-// 			result = fib(n - 1) + fib(n - 2);
-// 			memo[n] = result;
-// 		}
-// 		return result;
-// 	}
-// 	return fib;
-// })();
+var nbrOfLaps = function (x, y) {
+	var bob_laps = 1;
+	var charles_laps = 1;
+	var bob_dist = x;
+	var charles_dist = y;
+
+	while (bob_dist !== charles_dist) {
+		if (bob_dist < charles_dist) {
+			bob_laps += 1;
+			bob_dist = x * bob_laps;
+		} else {
+			charles_laps += 1;
+			charles_dist = y * charles_laps;
+		}
+	}
+  	return [bob_laps, charles_laps];
+}
+
+function validBraces(braces){
+	var braceArray = [];
+	var braceObj = {')': '(', ']': '[',	'}': '{'};
+	var openBraceArray = ['(', '[', '{'];
+	var closeBraceArray = [')', ']', '}'];
+	var test = braces.split('').every(function(thing) {
+		if (openBraceArray.indexOf(thing) !== -1) {
+			braceArray.push(thing);
+		}
+		if (closeBraceArray.indexOf(thing) !== -1) {
+			if (braceArray.pop() !== braceObj[thing]) {
+				return false;
+			}
+		}
+		return true;
+	});
+
+	if (braceArray.length === 0 && test === true) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function pascalsTriangle(n) {
+	var retArray = [];
+	var i = 0;
+	var rowWidth;
+	for (; i < n; i++) {
+		if (i === 0) {
+			retArray.push(1);
+		} else {
+			rowWidth = i + 1;
+			for (var j = 1; j <= rowWidth; j++) {
+				if (j === 1) {
+					var k = retArray.length - i;
+					retArray.push(retArray[k]);
+				} else if (j === rowWidth) {
+					var k = retArray.length - rowWidth;
+					retArray.push(retArray[k]);
+				} else {
+					var k1 = retArray.length - rowWidth;
+					var k2 = k1 + 1;
+					var val = retArray[k1] + retArray[k2];
+					retArray.push(val);
+				}
+			}
+		}
+	}
+	return retArray;
+}
+
+
+var hasAllTrailingZeroes = function(number) {
+	var numberAsString = Number(number).toString(10);
+	return /^[1-9][0][0]+$/.test(numberAsString);
+};
+
+var isInAwesomePhrases = function(number, phrases) {
+	return phrases.indexOf(number) !== -1 ? true : false;
+};
+
+var everyDigitIsTheSame = function(number) {
+	var numberArray = Number(number).toString(10).split('');
+	return numberArray.every(function(num) {
+		return num === numberArray[0];
+	});
+};
+
+var isPalindrome = function(number) {
+	var numberAsString = Number(number).toString(10);
+	var half = Math.floor(numberAsString.length / 2);
+	var firstHalf = numberAsString.slice(0, half);
+	var lastHalf = numberAsString.slice(half - (half * 2));
+	var lastReversed = '';
+	lastHalf.split('').reverse().forEach(function(num) {
+		lastReversed += num;
+	});
+	return firstHalf === lastReversed;
+};
+
+var isSequentialIncr = function(number) {
+	var numberArray = Number(number).toString(10).split('');
+	var prevNumber = Number(numberArray.shift());
+	return numberArray.every(function(num) {
+		prevNumber = (prevNumber + 1) % 10;
+		return (prevNumber === Number(num));
+	});
+};
+
+var isSequentialDecr = function(number) {
+	var numberArray = Number(number).toString(10).split('');
+	var prevNumber = Number(numberArray.shift());
+	return numberArray.every(function(num) {
+		prevNumber = prevNumber - 1;
+		return (prevNumber === Number(num));
+	});
+};
+
+
+function Automaton()
+{
+   this.states = [];
+}
+
+Automaton.prototype.readCommands = function(commands)
+{
+  console.log(commands);
+  // Return true if we end in our accept state, false otherwise.
+  var currentState = 'q1';
+  
+  commands.forEach(function(c) {
+    if (currentState === 'q1') {
+      if (c === '1') {
+        currentState = 'q2';      
+      }
+    } else if (currentState === 'q2') {
+      if (c === '0') {
+        currentState = 'q3';
+      }
+    } else if (currentState === 'q3') {
+      if (c === '0' || c === '1') {
+        currentState = 'q2';
+      }
+    }
+    console.log(currentState);
+  });
+  return currentState === 'q2' ? true : false;
+}
+
+var myAutomaton = new Automaton();
+
+
+
+var testSudoku = [
+					[5, 3, 4, 6, 7, 8, 9, 1, 2], 
+	                [6, 7, 2, 1, 9, 5, 3, 4, 8],
+	                [1, 9, 8, 3, 4, 2, 5, 6, 7],
+	                [8, 5, 9, 7, 6, 1, 4, 2, 3],
+	                [4, 2, 6, 8, 5, 3, 7, 9, 1],
+	                [7, 1, 3, 9, 2, 4, 8, 5, 6],
+	                [9, 6, 1, 5, 3, 7, 2, 8, 4],
+	                [2, 8, 7, 4, 1, 9, 6, 3, 5],
+	                [3, 4, 5, 2, 8, 6, 1, 7, 9]
+	            ];
+
+function validSolution(board){
+	var sections = [];
+  	var checker;
+  
+  var resetChecker = function() {
+    checker = [1,2,3,4,5,6,7,8,9];
+  };
+
+  var rows = board.every(function(row) {
+  	resetChecker();
+    return row.every(function(num) {
+      if (num === 0) {
+        return false;
+      }
+      var index = checker.indexOf(num);
+      if (index === -1) {
+      	return false;
+      }
+      checker.splice(index, 1);
+
+      return true;
+    });
+  });
+  sections.push(rows);
+
+  var cols = [0,1,2,3,4,5,6,7,8].every(function(ind) {
+  	resetChecker();
+  	return [0,1,2,3,4,5,6,7,8].every(function(col) {
+  		var num = board[col][ind];
+  		if (num === 0) {
+  			return false;
+  		}
+      	var index = checker.indexOf(num);
+      	if (index === -1) {
+      		return false;
+      	}
+      	checker.splice(index, 1);
+  		return true;
+  	});
+  });
+  sections.push(cols);
+
+
+	resetChecker();
+	var topLeft = [0,1,2].every(function(row) {
+		return [0,1,2].every(function(col) {
+	  		var num = board[row][col];
+	  		if (num === 0) {
+	  			return false;
+	  		}
+	      	var index = checker.indexOf(num);
+	      	if (index === -1) {
+	      		return false;
+	      	}
+	      	checker.splice(index, 1);
+	  		return true;
+		});
+	});
+	sections.push(topLeft);
+
+	resetChecker();
+	var topMid = [0,1,2].every(function(row) {
+		return [3,4,5].every(function(col) {
+	  		var num = board[row][col];
+	  		if (num === 0) {
+	  			return false;
+	  		}
+	      	var index = checker.indexOf(num);
+	      	if (index === -1) {
+	      		return false;
+	      	}
+	      	checker.splice(index, 1);
+	  		return true;
+		});
+	});
+	sections.push(topMid);
+
+	resetChecker();
+	var topRight = [0,1,2].every(function(row) {
+		return [6,7,8].every(function(col) {
+	  		var num = board[row][col];
+	  		if (num === 0) {
+	  			return false;
+	  		}
+	      	var index = checker.indexOf(num);
+	      	if (index === -1) {
+	      		return false;
+	      	}
+	      	checker.splice(index, 1);
+	  		return true;
+		});
+	});
+	sections.push(topRight);
+
+
+	resetChecker();
+	var midLeft = [3,4,5].every(function(row) {
+		return [0,1,2].every(function(col) {
+	  		var num = board[row][col];
+	  		if (num === 0) {
+	  			return false;
+	  		}
+	      	var index = checker.indexOf(num);
+	      	if (index === -1) {
+	      		return false;
+	      	}
+	      	checker.splice(index, 1);
+	  		return true;
+		});
+	});
+	sections.push(midLeft);
+
+	resetChecker();
+	var midMid = [3,4,5].every(function(row) {
+		return [3,4,5].every(function(col) {
+	  		var num = board[row][col];
+	  		if (num === 0) {
+	  			return false;
+	  		}
+	      	var index = checker.indexOf(num);
+	      	if (index === -1) {
+	      		return false;
+	      	}
+	      	checker.splice(index, 1);
+	  		return true;
+		});
+	});
+	sections.push(midMid);
+
+	resetChecker();
+	var midRight = [3,4,5].every(function(row) {
+		return [6,7,8].every(function(col) {
+	  		var num = board[row][col];
+	  		if (num === 0) {
+	  			return false;
+	  		}
+	      	var index = checker.indexOf(num);
+	      	if (index === -1) {
+	      		return false;
+	      	}
+	      	checker.splice(index, 1);
+	  		return true;
+		});
+	});
+	sections.push(midRight);
+
+	resetChecker();
+	var botLeft = [6,7,8].every(function(row) {
+		return [0,1,2].every(function(col) {
+	  		var num = board[row][col];
+	  		if (num === 0) {
+	  			return false;
+	  		}
+	      	var index = checker.indexOf(num);
+	      	if (index === -1) {
+	      		return false;
+	      	}
+	      	checker.splice(index, 1);
+	  		return true;
+		});
+	});
+	sections.push(botLeft);
+
+	resetChecker();
+	var botMid = [6,7,8].every(function(row) {
+		return [3,4,5].every(function(col) {
+	  		var num = board[row][col];
+	  		if (num === 0) {
+	  			return false;
+	  		}
+	      	var index = checker.indexOf(num);
+	      	if (index === -1) {
+	      		return false;
+	      	}
+	      	checker.splice(index, 1);
+	  		return true;
+		});
+	});
+	sections.push(botMid);
+
+
+	resetChecker();
+	var botLeft = [6,7,8].every(function(row) {
+		return [6,7,8].every(function(col) {
+	  		var num = board[row][col];
+	  		if (num === 0) {
+	  			return false;
+	  		}
+	      	var index = checker.indexOf(num);
+	      	if (index === -1) {
+	      		return false;
+	      	}
+	      	checker.splice(index, 1);
+	  		return true;
+		});
+	});
+	sections.push(botLeft);
+
+
+  	return sections.every(function(val) {
+  		return val === true;
+  	});
+}
+
+function rangeExtraction(list) {
+	var ret = [];
+	var range = [];
+
+	var processRange = function() {
+		if (range.length > 2) {
+			ret.push(range.shift() + '-' + range.pop());
+		} else {
+			Array.prototype.push.apply(ret, range);
+		}
+		range = [];
+	};
+
+	list.forEach(function(item) {
+		var lastRangeIndex = range.length - 1;
+		if (range.length === 0) {
+			range.push(item);
+		} else {
+			if (item === range[lastRangeIndex] + 1) {
+				range.push(item);
+			} else {
+				processRange();
+				range.push(item);
+			}
+		}
+	});
+
+	processRange();
+	return ret.join(',');
+}
+
+function formatDuration (seconds) {
+	if (seconds === 0) {
+		return 'Now';
+	}
+
+	var timesInSeconds = {
+		seconds: 1,
+		minutes: 60,
+		hours: 60 * 60,
+		days: 60 * 60 * 24,
+		years: 60 * 60 * 24 * 365
+	};
+
+	var timeFrames = {
+		years: 0,
+		days: 0,
+		hours: 0,
+		minutes: 0,
+		seconds: 0
+	};
+
+	var inflect = {
+		years: 'year',
+		days: 'day',
+		hours: 'hour',
+		minutes: 'minute',
+		seconds: 'second'
+	};
+
+	var retArray = [];
+	var retString = '';
+	Object.keys(timeFrames).forEach(function(t) {
+		timeFrames[t] = Math.floor(seconds / timesInSeconds[t]);
+		seconds = seconds % timesInSeconds[t];
+		if (timeFrames[t] > 0) {
+			if (retString !== '') {
+				retString += ', ';
+			}
+			var inf = timeFrames[t] > 1 ? t : inflect[t];
+			retString += timeFrames[t] + ' ' + inf;
+		}
+	});
+
+	retString = retString.replace(/,\s([^,]+)$/, ' and $1');
+	return retString;
+	
+}
+
+var permutations = function(str) {
+	var charArray = str.split('');
+	var arrLen = charArray.length;
+	var i = 0;
+	var j = 0;
+
+	for (; i < arrLen; i++) {
+		
+	}
+};
+
+var isValidCoordinates = function(coordinates) {
+	var coords = coordinates.split(',');
+
+	if (coords.length > 2) {
+		return false;
+	}
+
+	var latTest = coords[0].match(/^\s?(-?[\d]+\.?[\d]*)$/g);
+	var lonTest = coords[1].match(/^\s?(-?[\d]+\.?[\d]*)$/g);
+	if (latTest === null || lonTest === null) {
+		return false;
+	}
+
+	var lat = parseFloat(coords[0]);
+	var lon = parseFloat(coords[1]);
+
+	if (lat > 90 || lat < -90 || isNaN(lat)) {
+		return false;
+	}
+
+	if (lon > 180 || lon < -180 || isNaN(lon)) {
+		return false;
+	}
+
+	return true;
+};
 
 </script>
 </body>

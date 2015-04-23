@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+	<title>Falling</title>
+	<style>
+		#ball {
+			width: 20px;
+			height: 20px;
+			border-radius: 10px;
+			background-color: red;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		#Container {
+			border-bottom: 1px solid blue;
+			border-right: 1px solid blue;
+			height: 650px;
+			width: 1014px;
+		}
+	</style>
+</head>
+<body>
+	<!-- <div id="count">0</div> -->
+	<div id="Container">
+		<div id="ball"></div>
+	</div>
+	<script>
+		// var counter = document.querySelector('#count');
+		var ball = document.querySelector("#ball");
+		var count = 0;
+		var leftCount = 0;
+		var intv = 100;
+		var doubleIt = function(num) {
+			return num * 2;
+		};
+		var halfIt = function(num) {
+			return num / 2;
+		};
+		var addFive = function(num) {
+			return num + 5;
+		};
+		var subtractFive = function(num) {
+			return num - 5;
+		};
+
+		var actionFunction = doubleIt;
+		var leftAction = addFive;
+		var directionGoing = 'right';
+		
+		var interval = setInterval(function() {
+			count = actionFunction(count);
+			if (count === 0) {
+				count = 10;
+			}
+			leftCount = leftAction(leftCount);
+			ball.style.top = count + 'px';
+			ball.style.left = leftCount + 'px';
+			if (count >= 500) {
+				actionFunction = halfIt; 
+				// clearInterval(interval);
+			}
+			if (count < 10) {
+				actionFunction = doubleIt;
+			}
+			if (leftCount >= 1000 && directionGoing === 'right') {
+				leftAction = subtractFive;	
+				directionGoing = 'left';
+			}
+			if (leftCount <= 0 && directionGoing === 'left') {
+				leftAction = addFive;
+				directionGoing = 'right';
+			}
+		}, 50);
+	</script>
+</body>
+</html>

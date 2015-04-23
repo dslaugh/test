@@ -1,0 +1,611 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"a",
+				"addCountToDataStore"
+			],
+			[
+				"add",
+				"addToTestArray"
+			],
+			[
+				"subs",
+				"subscribers"
+			],
+			[
+				"c",
+				"countBtn"
+			],
+			[
+				"script",
+				"SCRIPT	Tag"
+			],
+			[
+				"pr",
+				"printUsers"
+			],
+			[
+				"up",
+				"updateUsersList"
+			],
+			[
+				"get",
+				"getElementById"
+			],
+			[
+				"ob",
+				"observerList"
+			],
+			[
+				"eg",
+				"eggsInventory"
+			],
+			[
+				"copy",
+				"copyOfQueue"
+			],
+			[
+				"new",
+				"newFruits"
+			],
+			[
+				"all",
+				"allButLastNamedArgs"
+			],
+			[
+				"number",
+				"numberOfTrailingArgs"
+			],
+			[
+				"ar",
+				"arguments"
+			],
+			[
+				"function",
+				"function"
+			],
+			[
+				"add5The",
+				"add5Then10Then20"
+			],
+			[
+				"dir",
+				"dir"
+			],
+			[
+				"is",
+				"isDirectionICanMove"
+			],
+			[
+				"find",
+				"findNearestHealthWell"
+			],
+			[
+				"attac",
+				"attackableEnemies"
+			],
+			[
+				"fin",
+				"findNearestHealthWell"
+			],
+			[
+				"in",
+				"inDirectionICanMove"
+			],
+			[
+				"un",
+				"unoccupied"
+			],
+			[
+				"Twitter",
+				"TwitterStreamTracker"
+			],
+			[
+				"_ar",
+				"_articleUrlIsGood"
+			],
+			[
+				"resp",
+				"responseKeys"
+			],
+			[
+				"mu",
+				"multiplyByThreeThenAddOne"
+			],
+			[
+				"ran",
+				"randomizedString"
+			],
+			[
+				"_get",
+				"_getMatchingTerms"
+			],
+			[
+				"_",
+				"_getFacebookTotal"
+			],
+			[
+				"str",
+				"stripUtmParams"
+			],
+			[
+				"items",
+				"itemsToMatchOn"
+			],
+			[
+				"ha",
+				"hashtags"
+			],
+			[
+				"_gt",
+				"_getTermsFromDB"
+			],
+			[
+				"TwShareOf",
+				"TwShareOfVoiceThemTerm"
+			],
+			[
+				"exi",
+				"existingJoinTableId"
+			],
+			[
+				"_share",
+				"_sharePopularitiesTwArticlesExists"
+			],
+			[
+				"SharePopularity",
+				"SharePopularity_TwArticle"
+			],
+			[
+				"item",
+				"itemsToMatch"
+			],
+			[
+				"ex",
+				"extended_entities"
+			],
+			[
+				"TW",
+				"TWArticle_TWTweet"
+			],
+			[
+				"en",
+				"encodeURIComponent"
+			],
+			[
+				"TWT",
+				"TWTerm_TWTweet"
+			],
+			[
+				"tw_u",
+				"tw_user_id"
+			],
+			[
+				"Twi",
+				"TwitterStreamTracker"
+			],
+			[
+				"coor",
+				"coordinates"
+			],
+			[
+				"charl",
+				"charles_dist"
+			],
+			[
+				"b",
+				"body"
+			],
+			[
+				"ava",
+				"availableItems"
+			],
+			[
+				"re",
+				"recipeItems"
+			],
+			[
+				"ma",
+				"maxToHere"
+			],
+			[
+				"what",
+				"whatsAround"
+			],
+			[
+				"cr",
+				"createdCallback"
+			],
+			[
+				"current",
+				"current_page_item"
+			],
+			[
+				"score",
+				"scorecardLoaded"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "test_debug.php",
+			"settings":
+			{
+				"buffer_size": 223,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 247.0,
+		"selected_items":
+		[
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package control",
+				"Package Control: List Packages"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/dslaugh/Sites/testjs/testjs.sublime-project",
+		"/Users/dslaugh/Library/Application Support/Sublime Text 2/Packages/Xdebug Client/Xdebug.sublime-settings",
+		"/Users/dslaugh/Library/Application Support/Sublime Text 2/Packages/User/Xdebug.sublime-settings",
+		"/Users/dslaugh/Sites/testjs/testjs.sublime-workspace",
+		"/Users/dslaugh/Library/Application Support/Sublime Text 2/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/dslaugh/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/dslaugh/Library/Application Support/Sublime Text 2/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/dslaugh/nodejs/sandbox/allonge/allonge.js",
+		"/Users/dslaugh/nodejs/sandbox/test.js",
+		"/Users/dslaugh/Desktop/test.js",
+		"/Users/dslaugh/nodejs/sandbox/loc_store.js",
+		"/Users/dslaugh/nodejs/sandbox/test/sandboxSpec.js",
+		"/Users/dslaugh/nodejs/sandbox/sandbox.js",
+		"/Users/dslaugh/nodejs/sandbox/test/session_store_test.js",
+		"/Users/dslaugh/nodejs/sandbox/allonge/test/allongeSpec.js",
+		"/Users/dslaugh/nodejs/sandbox/test/loc_store_test.js",
+		"/Users/dslaugh/Sites/testjs/qb/config.php",
+		"/Users/dslaugh/Sites/testjs/qb/v3-php-sdk-2.0.5/sdk.config",
+		"/Users/dslaugh/Sites/testjs/qb/v3-php-sdk-2.0.5/config.php",
+		"/Users/dslaugh/nodejs/meteor/leaderboard/leaderboard.html",
+		"/Users/dslaugh/Sites/testjs/PHPOAuthSample/App.config",
+		"/Users/dslaugh/Sites/testjs/PHPOAuthSample/config.php",
+		"/Users/dslaugh/nodejs/sandbox/browser_test.js",
+		"/Users/dslaugh/nodejs/sandbox/index.html",
+		"/Users/dslaugh/nodejs/sandbox/index.js",
+		"/Users/dslaugh/nodejs/sandbox/test/allongeSpec.js",
+		"/Users/dslaugh/nodejs/sandbox/ramda_testing.js",
+		"/Users/dslaugh/nodejs/sandbox/test/ramda_testingSpec.js",
+		"/Users/dslaugh/hero-starter/game_logic/Game.js",
+		"/Users/dslaugh/Desktop/jsbattle.txt",
+		"/Users/dslaugh/Library/Application Support/Sublime Text 2/Packages/User/consolelog",
+		"/Users/dslaugh/nodejs/twitter-streaming2/package.json",
+		"/Users/dslaugh/nodejs/twitter-streaming2/sandbox.js",
+		"/Users/dslaugh/nodejs/twitter-streaming2/node_modules/twitter/package.json",
+		"/Users/dslaugh/nodejs/twitter-streaming2/test_tweets.txt",
+		"/Users/dslaugh/nodejs/twitter-streaming2/calc.js",
+		"/Users/dslaugh/nodejs/twitter-streaming2/test/calcSpec.js",
+		"/Users/dslaugh/nodejs/twitter-streaming2/node_modules/twitter/lib/twitter.js",
+		"/Users/dslaugh/nodejs/twitter-streaming2/test.js",
+		"/Users/dslaugh/nodejs/twitter-streaming2/TwitterStreamingTracker.js",
+		"/Users/dslaugh/nodejs/twitter-streaming2/test.txt",
+		"/Users/dslaugh/nodejs/twitter-streaming2/index.html",
+		"/Users/dslaugh/nodejs/twitter-streaming2/node_modules/bookshelf/lib/model.js",
+		"/Users/dslaugh/nodejs/twitter-streaming2/backup.js",
+		"/Users/dslaugh/nodejs/twitter-streaming2/server.js",
+		"/Users/dslaugh/nodejs/twitter-streaming2/node_modules/node-tweet-stream/lib/twitter.js",
+		"/Users/dslaugh/AWS/Twitter-Streaming-POC/socket.html",
+		"/Users/dslaugh/AWS/Twitter-Streaming-POC/node_modules/twitter/lib/legacy.js",
+		"/Users/dslaugh/AWS/Twitter-Streaming-POC/node_modules/twitter/index.js",
+		"/Users/dslaugh/AWS/Twitter-Streaming-POC/node_modules/twitter/desmond.js",
+		"/Users/dslaugh/Sites/testjs/index.html",
+		"/Users/dslaugh/Downloads/webgrind/index.php",
+		"/Users/dslaugh/Sites/testjs/backbone/index.html",
+		"/Users/dslaugh/Sites/test/index.html",
+		"/Users/dslaugh/Sites/test/whole.html",
+		"/Users/dslaugh/Sites/test/web_components.html",
+		"/Users/dslaugh/Sites/test/scorecard_home.html",
+		"/Users/dslaugh/before.txt",
+		"/Users/dslaugh/after.txt",
+		"/Users/dslaugh/Sites/testjs/jquery_test.html",
+		"/Users/dslaugh/Sites/testjs/js/jqtest.js",
+		"/private/var/folders/25/_r16854511j53tkvfr75w8g80000gn/T/ecaf690a-c03f-4101-b6d5-2998449398d0/var/www/vhosts/mercato/wp-content/themes/twentytwelve/single.php",
+		"/private/var/folders/25/_r16854511j53tkvfr75w8g80000gn/T/ecaf690a-c03f-4101-b6d5-2998449398d0/var/www/vhosts/mercato/wp-content/themes/twentytwelve/page.php",
+		"/private/var/folders/25/_r16854511j53tkvfr75w8g80000gn/T/ecaf690a-c03f-4101-b6d5-2998449398d0/var/www/vhosts/mercato/wp-content/themes/twentytwelve/content.php",
+		"/private/var/folders/25/_r16854511j53tkvfr75w8g80000gn/T/03be4a39-d7d5-45ad-8a4d-1a43290fe5e4/var/www/vhosts/mercato/wp-content/themes/twentytwelve/header.php",
+		"/private/var/folders/25/_r16854511j53tkvfr75w8g80000gn/T/03be4a39-d7d5-45ad-8a4d-1a43290fe5e4/var/www/vhosts/mercato/wp-content/themes/twentytwelve/style.css",
+		"/Users/dslaugh/Downloads/odyniec-imgareaselect-398e8df/distfiles/css/imgareaselect-animated.css",
+		"/Users/dslaugh/Downloads/vanilla.js",
+		"/Users/dslaugh/Sites/testjs/out/api.js",
+		"/Users/dslaugh/Sites/rightintel/Code/app/views/templates/signup_trials/view_communication.ctp"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"/Users/dslaugh/nodejs/twitter-streaming2"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"@fart",
+			"extend",
+			"options",
+			"Events",
+			"events",
+			"subscribers",
+			"+k",
+			"+f",
+			"super+e",
+			"exports",
+			"	\n",
+			"todayCounts",
+			"add",
+			"sessionStore",
+			"module",
+			"= ",
+			"clear",
+			"updateUsersList",
+			"apples",
+			";\n",
+			"oauthToken",
+			"minutesto",
+			"curry",
+			"preventDefault",
+			"queue",
+			"console",
+			"stack1",
+			"reverseDivide",
+			"date",
+			"2015",
+			"date",
+			"id",
+			"2015",
+			"exports",
+			"index.html",
+			"funcs",
+			"variadic",
+			"newFunc",
+			"D.",
+			"D",
+			"d",
+			"D",
+			"d",
+			"D",
+			"d",
+			"D",
+			"sq",
+			"num",
+			"allonge",
+			"\n		",
+			"doubleOfAddOne",
+			"			\n",
+			"testResult3",
+			"testResult2",
+			"},\n",
+			"super+e",
+			"},\n",
+			"super+f",
+			"slurp",
+			"push",
+			"dir",
+			"inDirectionICanMove",
+			"isDirectionICanMove",
+			"inDirectionI",
+			"isDirectionICanMove",
+			"isDir",
+			";\n",
+			"test1",
+			"+=",
+			"=",
+			"eol",
+			"game",
+			"console.log",
+			"true",
+			"=",
+			" =",
+			"var",
+			"copy",
+			"lowestHealthDir",
+			";\n",
+			"lowestHealthDir",
+			"moveDir",
+			"command",
+			"super+e",
+			"ret",
+			"=",
+			"var",
+			"whatsAround",
+			"WhatsAround",
+			"whatsAround",
+			"my",
+			"myLeft",
+			"myTop",
+			"my",
+			"];\n",
+			"\n      ",
+			"\n    ",
+			"myDirs[",
+			"NW",
+			";",
+			"=",
+			"var",
+			"getTileNearby",
+			"gameData",
+			"inline-news-heading-table-main",
+			"txt={this.state.txt}",
+			"Widget",
+			"main-wrapper",
+			"wrapper",
+			"=3D",
+			"io",
+			":",
+			"this.models.",
+			"TwitterStreamTracker",
+			"TwitterStreaming",
+			"SharePopularity_TwArticle",
+			"TwArticle_TwTweet",
+			"TwTerm_TwTweet",
+			"SharePopularity",
+			"TwArticle",
+			"TwShareOfVoiceTerm",
+			"TwTopicTerm",
+			"TwTerm",
+			"TwTweet",
+			"TwUser",
+			"TwTweet",
+			"TwUser",
+			"TWArticle"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "test_debug.php",
+					"settings":
+					{
+						"buffer_size": 223,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								223,
+								223
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.xdebug":
+	{
+		"height": 100.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"",
+				"codewars.html"
+			],
+			[
+				"counter.js",
+				"backbone/counter/js/counter.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 180.0,
+	"status_bar_visible": true
+}
