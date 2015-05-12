@@ -2,7 +2,7 @@
 
 <html>
 <head>
-	<title>Testing</title>
+	<title>Testing Test</title>
 	<meta charset='UTF-8'>
 	<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.14.0.css">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -35,11 +35,30 @@
 			border-style: solid;
 			border-width: 30px 30px 30px 30px;
 		}*/
+
+		.shape2 {
+			position: relative;
+			height: 200px;
+			width: 200px;
+			background-color: #ccc;
+		}
+		.shape2:after {
+			content: '';
+			border-radius: 50%;
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+
 	</style>
 </head>
 <body>
 	<div id='main_container'></div>
 	<div class="shape"></div>
+	<div class="shape2"></div>
 	<ul id="peopleList"></ul>
 	<!-- <div id="qunit"></div>
 	<div id="qunit-fixture"></div>
