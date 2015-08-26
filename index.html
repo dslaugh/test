@@ -69,6 +69,26 @@
 	<script src="/js/calc.js"></script> 
 	 -->
 	<script>
+
+		// $.ajax({
+		// 	type: 'POST',
+		// 	url: 'http://www.davidslaugh.com/api/v1/users',
+		// 	success: function(response) {
+		// 		console.log(response);
+		// 	}
+		// });
+
+		var request = new XMLHttpRequest();
+		request.open('POST', encodeURI('http://www.davidslaugh.com/api/v1/users'), true);
+		request.send();
+		request.onload = function() {
+			request.onreadystatechange = function() {
+				if (request.readyState === 4) {
+					console.log(request.status, JSON.parse(request.responseText));
+				}
+			}
+		};
+
 		var observer = function(changes) {
 			changes.forEach(function(change) {
 				console.log(change);
