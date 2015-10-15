@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.19.0.css">
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="//code.jquery.com/jquery-1.11.3.js"></script>
+<script src="//code.jquery.com/qunit/qunit-1.19.0.js"></script>
+<script>
+
+ 	var t = {
+ 		id: 1,
+ 		otherFunc: function() {
+ 			return 'hello';
+ 		},
+ 		getId: function() {
+ 			this.otherFunc();
+ 			return this.id;
+ 		}
+ 	}
+
+
+	function stubFn(returnValue) {
+		var fn = function() {
+			fn.called = true;
+			fn.args = Array.prototype.slice.call(arguments);
+			return returnValue;
+		};
+
+		fn.called = false;
+
+		return fn;
+	}
+
+
+	test('', function() {
+		var x = Object.create(t);
+		x.otherFunc = stubFn('goodbye');
+		x.getId();
+		
+		equal(x.otherFunc.called, 'hello');
+	})
+</script>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Counts</title>
+	<style>
+	.counter-date {
+		margin-right: 10px;
+	}
+	</style>
+</head>
+<body>
+	<div id="counts"></div>
+
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/react/0.14.0-rc1/react-dom.js"></script>
+	<script type="text/javascript">
+
+
+		var counts = [
+			{key: 1, counter_date: '2015-09-26', counter_time: '12:10:01'},
+			{key: 2, counter_date: '2015-09-26', counter_time: '11:10:01'},
+			{key: 3, counter_date: '2015-09-26', counter_time: '2:10:01'}
+		];
+
+		var CountItem = React.createClass({
+			propTypes: {
+				counter_date: React.PropTypes.string.isRequired,
+				counter_time: React.PropTypes.string.isRequired
+			},
+			render: function() {
+				return (
+					React.createElement('li', {},
+						React.createElement('span', {className: 'counter-date'}, this.props.counter_date),
+						React.createElement('span', {className: 'counter-time'}, this.props.counter_time)
+					)
+				);
+			}
+		});
+
+		var request = new XMLHttpRequest();
+		request.open('GET', encodeURI('http://www.davidslaugh.com/api/v1/counts'), true);
+		request.send();
+		request.onload = function() {
+			var OK = 200;
+			console.log(request.status);
+			if (request.status === OK) {
+				var data = JSON.parse(request.responseText);
+				var countItems = getCounts(data);
+				var countRoot = React.createElement('ol', {}, countItems);
+				ReactDOM.render(countRoot, document.getElementById('counts'));
+			}
+		};
+
+		function getCounts(counts) {
+			var today = getTodaysDate();
+			var countItems = counts.filter(function(ct) {
+				return ct.counter_date === today;
+			}).map(function(ct) {
+				ct.key = ct.id;
+				return React.createElement(CountItem, ct);
+			});
+			return countItems;
+		}
+
+		function getTodaysDate() {
+			var dt = new Date();
+			return dt.getFullYear() + '-' + zeroPad(dt.getMonth()) + '-' + zeroPad(dt.getDate());
+
+		}
+
+		function zeroPad(num) {
+			return num < 10 ? '0' + num : num;
+		}
+
+
+	</script>
+</body>
+</html>

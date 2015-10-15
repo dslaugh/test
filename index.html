@@ -6,6 +6,7 @@
 	<meta charset='UTF-8'>
 	<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.14.0.css">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.17.1/ramda.js"></script>
 	<style>
 		#main_container {
 			border: 1px solid #333;
@@ -28,6 +29,7 @@
 			border-style: solid;
 			border-width: 0 0 30px 30px;
 			box-shadow: 5px 5px 0px 0px green, 10px 10px 0px 0px blue;
+			margin-bottom: 20px;
 		}
 		/*.shape:before {
 			position: absolute;
@@ -53,13 +55,21 @@
 			background-color: red;
 		}
 
+		.interval {
+			display: inline-block;
+		}
+
 	</style>
 </head>
 <body>
+	<div id="Intervals"></div>
 	<div id='main_container'></div>
 	<div class="shape"></div>
 	<div class="shape2"></div>
 	<ul id="peopleList"></ul>
+	<ul id="Counts"></ul>
+
+
 	<!-- <div id="qunit"></div>
 	<div id="qunit-fixture"></div>
 	<script src="//code.jquery.com/qunit/qunit-1.14.0.js"></script>
@@ -69,25 +79,122 @@
 	<script src="/js/calc.js"></script> 
 	 -->
 	<script>
+		// My api testing
+		(function() {
+			// var stubFn = function(options) {
+			// 	options.success('this is from the stub function');
+			// };
 
-		// $.ajax({
-		// 	type: 'POST',
-		// 	url: 'http://www.davidslaugh.com/api/v1/users',
-		// 	success: function(response) {
-		// 		console.log(response);
-		// 	}
-		// });
+			// var origAjax = $.ajax;
 
-		var request = new XMLHttpRequest();
-		request.open('POST', encodeURI('http://www.davidslaugh.com/api/v1/users'), true);
-		request.send();
-		request.onload = function() {
-			request.onreadystatechange = function() {
-				if (request.readyState === 4) {
-					console.log(request.status, JSON.parse(request.responseText));
-				}
+			// $.ajax = stubFn;
+
+			// $.ajax({
+			// 	dataType: 'json',
+			// 	type: 'GET',
+			// 	url: 'http://www.davidslaugh.com/api/v1/scorecards',
+			// 	success: function(response) {
+			// 		console.log(response);
+			// 	}
+			// });
+
+			// $.ajax = origAjax;
+
+			var todayString = new Date().toString();
+			var today = getDateFromDateString(todayString);
+			var counterDateIsToday = R.compose(R.equals(today), R.prop('counter_date'));
+			var getTodayCounts = R.filter(counterDateIsToday);
+
+			function xhrStub() {
+				return {
+					openCalled: false,
+					sendCalled: false,
+					verb: '',
+					url: '',
+					async: false,
+					status: 200,
+					responseText: '[{"id": "1", "counter_date": "2015-09-09"}, {"id": "1", "counter_date": "2015-09-09"}]',
+					open: function(verb, url, async) {
+						this.openCalled = true;
+						this.verb = verb;
+						this.url = url,
+						this.async = async;
+					},
+					send: function() {
+						this.sendCalled = true;
+						var self = this;
+						var intvl = setInterval(function() {
+							if (typeof self.onload === 'function') {
+							console.log('hello');
+								clearInterval(intvl);
+								self.onload();
+							}
+						}, 1000);
+					}
+				};
 			}
-		};
+
+			var origXMLHttpRequest = XMLHttpRequest;
+
+			// XMLHttpRequest = xhrStub;
+
+			var request = new XMLHttpRequest();
+			// console.log(request.send);
+			request.open('GET', encodeURI('http://www.davidslaugh.com/api/v1/counts'), true);
+			request.send();
+			request.onload = function() {
+				var OK = 200;
+				if (request.status === OK) {
+					var data = JSON.parse(request.responseText);
+					console.log(data);
+					var lis = R.compose(R.map(makeLi), getTodayCounts);
+					$('#Counts').append(lis(data));
+				} else {
+					console.log('ajax error');
+				}
+			};
+
+			console.log(request);
+
+			XMLHttpRequest = origXMLHttpRequest;
+
+
+			function getDateFromDateString(dateString) {
+				var date = new Date(dateString);
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var day = date.getDate();
+				
+				return year + '-' + zeroPad(month) + '-' + zeroPad(day);
+
+			}
+
+			function zeroPad(num) {
+				return num < 10 ? '0'+num : num.toString();
+			}
+
+			function makeLi(row) {
+				return '<li>'+R.prop('counter_date', row)+'</li>';
+			}
+
+			function loggit(value) {
+				console.log(value);
+				return value;
+			};
+
+			function formatDateForMysql(dateString) {
+				var date = new Date(dateString);
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var day = date.getDate();
+				var hour = date.getHours();
+				var minute = date.getMinutes();
+				var second = date.getSeconds();
+
+				return year + '-' + zeroPad(month) + '-' + zeroPad(day) + ' ' + hour + ':' + minute + ':' + second;			
+			};
+
+		})();
 
 		var observer = function(changes) {
 			changes.forEach(function(change) {
@@ -185,6 +292,160 @@
 		}
 		var listItemedPeople = people.map(makeListItem).join('');
 		document.querySelector('#peopleList').innerHTML = listItemedPeople;
+
+
+		var octave = interval(2, 1);
+		var fourth = interval(3, 2);
+		var fifth = interval(4, 3);
+		var majorThird = interval(5, 4);
+
+
+		var width = 200;
+		var octaveHeight = octave(width);
+		var thirdHeight = majorThird(width);
+		var fourthHeight = fourth(width);
+		var fifthHeight = fifth(width);
+
+		var color = 100;
+		var octaveColor = Math.floor(octave(color));
+		var thirdColor = Math.floor(majorThird(color));
+		var fourthColor = Math.floor(fourth(color));
+		var fifthColor = Math.floor(fifth(color));
+
+		console.log(octaveColor, thirdColor, fifthColor);
+
+		var panels = [
+			{
+				width: width,
+				height: thirdHeight,
+				backgroundColor: rgb(color, thirdColor, fifthColor)
+				// backgroundColor: 'rgb('+color+', '+thirdColor+', '+fifthColor+')'
+			},
+			{
+				width: width,
+				height: thirdHeight,
+				backgroundColor: rgb(octaveColor, thirdColor, fifthColor)
+			},
+			{
+				width: width,
+				height: thirdHeight,
+				backgroundColor: rgb(thirdColor, color, fifthColor)
+			},
+			{
+				width: width,
+				height: thirdHeight,
+				backgroundColor: rgb(thirdColor, octaveColor, fifthColor)
+			},
+			{
+				width: width,
+				height: thirdHeight,
+				backgroundColor: rgb(thirdColor, fifthColor, color)
+			},
+			{
+				width: width,
+				height: thirdHeight,
+				backgroundColor: rgb(thirdColor, fifthColor, octaveColor)
+			}
+		];
+
+		function compose(fn1, fn2) {
+			return function(x) {
+				return fn1(fn2(x));
+			};
+		}
+
+		var ct = 0;
+
+		var $divs = panels.map(makeDiv);
+		var $intervals = $('#Intervals');
+		$intervals.append($divs);
+
+
+		for (var i=0; i<6; i++) {
+			$('#panel'+i).css('background-color')
+		}
+
+		// var mul2 = function(x) {
+		// 	return x * 2;
+		// };
+		// var add2 = function(x) {
+		// 	return x + 2;
+		// };
+		// var add3 = compose(add2, mul2);
+		// console.log(add3(3));
+
+
+		function interval(a, b) {
+			return function(num) {
+				return Math.floor(num * (a / b));
+			};
+		}
+
+		function makeDiv(opts) {
+			var $div = $('<div />');
+			$div.css('width', opts.width+'px');
+			$div.css('height', opts.height+'px');
+			$div.css('background-color', opts.backgroundColor);
+			$div.css('display', 'inline-block');
+			$div.attr('id', 'panel'+ct);
+			ct += 1;
+			return $div;
+		}
+
+		function rgb(r, g, b) {
+			return 'rgb('+r+', '+g+', '+b+')';
+		}
+
+		// var x = (-b + Math.sqrt(Math.pow(b, 2) - (4 * a * c)) / 2 * a;
+
+		function quad(a, b, c) {
+			var xPlus;
+			var xMinus;
+			var bSquared = b * b;
+			var ac4 = 4 * a * c;
+			var a2 = 2 * a;
+
+			xPlus = (-b + Math.sqrt(bSquared - ac4)) / a2;
+
+			xMinus = (-b - Math.sqrt(bSquared - ac4)) / a2;
+			return [xPlus, xMinus];
+		}
+
+		var what = quad(-10, -9, 1);
+		console.log(what);
+
+		function theSquareOf(num) {
+			var number = 1;
+			var oddNumbersSoFar = 0;
+			var sum = 0;
+			while (oddNumbersSoFar < num) {
+				if (isOdd(number)) {
+					sum += number;
+					oddNumbersSoFar += 1;
+				}
+				number += 1;
+			}
+
+			return sum;
+		}
+
+		function isOdd(number) {
+			return number % 2 !== 0;
+		}
+
+		var squareOf = theSquareOf(81);
+		console.log(squareOf);
+
+		var $body = document.querySelector('body');
+		var $newDiv = document.createElement('div');
+		$newDiv.innerHTML = 'fart balls';
+		$newDiv.id = 'FARTBALLS';
+
+		// append($body, $newDiv);
+
+		var test = document.querySelector('#FARTBALLS', $body);
+		console.log(test);
+
 
 
 

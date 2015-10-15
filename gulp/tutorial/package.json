@@ -1,0 +1,17 @@
+{
+  "name": "tutorial",
+  "version": "0.0.0",
+  "description": "A tutorial for using gulp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Slaugh",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.0.2",
+    "gulp-sass": "^2.0.4",
+    "gulp-sourcemaps": "^1.6.0"
+  }
+}

@@ -1,0 +1,415 @@
+<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.19.0.css">
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="//code.jquery.com/jquery-1.11.3.js"></script>
+<script src="//code.jquery.com/qunit/qunit-1.19.0.js"></script>
+<script src="main.js"></script>
+<script>
+	function stubFn(returnValue) {
+		var fn = function() {
+			fn.called = true;
+			fn.args = Array.prototype.slice.call(arguments);
+			return returnValue;
+		};
+
+		fn.called = false;
+
+		return fn;
+	}
+
+	module('_createNotificationBox');
+		test('Should create a notification element', function() {
+			var Mentions = rintel.setupUserMentions();
+			var itemData = {
+				id: 1,
+				name: 'david'
+			};
+			var expected = $('<li class="user-notification-box-item sugg-box-item"><span class="user-notification-label">david</span><span class="user-notification-delete sugg-remove" data-user-id="1" title="Remove Notification">x</span></li>');
+
+			var box = Mentions._createNotificationBox(itemData);
+
+			equal(box[0].outerHTML, expected[0].outerHTML, 'Notification box created');
+		});
+
+	module('_updateUserMentions');
+		test('_setUserMentionsInHiddenInput should be called', function() {
+			var Mentions = rintel.setupUserMentions();
+			var orig = Mentions._setUserMentionsInHiddenInput();
+			Mentions._setUserMentionsInHiddenInput = stubFn();
+			var itemData = {
+				id: 1,
+				name: 'david'
+			};
+
+			Mentions._updateUserMentions(itemData);
+
+			ok(Mentions._setUserMentionsInHiddenInput.called);
+
+			Mentions._setUserMentionsInHiddenInput = orig;
+		});
+
+		test('should add an entry to _userMentions', function() {
+			var Mentions = rintel.setupUserMentions();
+			var orig = Mentions._setUserMentionsInHiddenInput();
+			Mentions._setUserMentionsInHiddenInput = stubFn();
+			var itemData = {
+				id: 1,
+				name: 'david'
+			};
+
+			Mentions._updateUserMentions(itemData);
+
+			deepEqual(Mentions._userMentions, {'david': '1'});
+		});
+
+		test('should add multiple entries to _userMentions', function() {
+			var Mentions = rintel.setupUserMentions();
+			var orig = Mentions._setUserMentionsInHiddenInput();
+			Mentions._setUserMentionsInHiddenInput = stubFn();
+			var itemData1 = {
+				id: 1,
+				name: 'david'
+			};
+			var itemData2 = {
+				id: 2,
+				name: 'slaugh'
+			};
+
+			Mentions._updateUserMentions(itemData1);
+			Mentions._updateUserMentions(itemData2);
+
+			deepEqual(Mentions._userMentions, {'david': '1', 'slaugh': '2'});
+		});
+
+		test('should not duplicate entries in _userMentions', function() {
+			var Mentions = rintel.setupUserMentions();
+			var orig = Mentions._setUserMentionsInHiddenInput();
+			Mentions._setUserMentionsInHiddenInput = stubFn();
+			var itemData1 = {
+				id: 1,
+				name: 'david'
+			};
+			var itemData2 = {
+				id: 1,
+				name: 'david'
+			};
+
+			Mentions._updateUserMentions(itemData1);
+			Mentions._updateUserMentions(itemData2);
+
+			deepEqual(Mentions._userMentions, {'david': '1'});
+		});
+
+	module('_setUserMentionsInHiddenInput');
+		test('should write mentions to hidden input', function() {
+			$('#qunit-fixture').append('<input type="text" id="UserMentions" >');
+			var Mentions = rintel.setupUserMentions({
+				userMentionsHiddenField: '#qunit-fixture #UserMentions'
+			});
+			var testMention = {
+				id: 1,
+				name: 'david'
+			};
+			Mentions._userMentions = {'david': '1'};
+
+			Mentions._setUserMentionsInHiddenInput();
+
+			var hiddenInput = $('#UserMentions').val();
+			equal(hiddenInput, JSON.stringify(Mentions._userMentions));
+		});
+
+	module('_removeFromBodyMentions');
+		test('should remove a userId from _bodyMentions', function() {
+			var Mentions = rintel.setupUserMentions();
+			Mentions._bodyMentions = ['1','2','3'];
+
+			Mentions._removeFromBodyMentions('2');
+
+			deepEqual(Mentions._bodyMentions, ['1','3']);
+		});
+
+		test('should hide bodyNotificationsContainer if _bodyMentions is empty', function() {
+			$('#qunit-fixture').append('<div id="BodyNotificationsContainer"></div>');
+			var Mentions = rintel.setupUserMentions({
+				bodyNotificationsContainer: '#qunit-fixture #BodyNotificationsContainer'
+			});
+
+			Mentions._bodyMentions = ['1'];
+
+			Mentions._removeFromBodyMentions('1');
+
+			var display = $('#qunit-fixture #BodyNotificationsContainer').css('display');
+			equal(display, 'none');
+		});
+
+		test('should not hide bodyNotificationsContainer if _bodyMentions is not empty', function() {
+			$('#qunit-fixture').append('<div id="BodyNotificationsContainer"></div>');
+			var Mentions = rintel.setupUserMentions({
+				bodyNotificationsContainer: '#qunit-fixture #BodyNotificationsContainer'
+			});
+
+			Mentions._bodyMentions = ['1','2'];
+
+			Mentions._removeFromBodyMentions('1');
+
+			var display = $('#qunit-fixture #BodyNotificationsContainer').css('display');
+			equal(display, 'block');
+		});
+
+	module('_removeFromIntelMentions');
+		test('should remove a userId from _intelMentions', function() {
+			var Mentions = rintel.setupUserMentions();
+			Mentions._intelMentions = ['1','2','3'];
+
+			Mentions._removeFromIntelMentions('2');
+
+			deepEqual(Mentions._intelMentions, ['1','3']);
+		});
+
+		test('should hide intelNotificationsContainer if _bodyMentions is empty', function() {
+			$('#qunit-fixture').append('<div id="IntelNotificationsContainer"></div>');
+			var Mentions = rintel.setupUserMentions({
+				intelNotificationsContainer: '#qunit-fixture #IntelNotificationsContainer'
+			});
+
+			Mentions._intelMentions = ['1'];
+
+			Mentions._removeFromIntelMentions('1');
+
+			var display = $('#qunit-fixture #IntelNotificationsContainer').css('display');
+			equal(display, 'none');
+		});
+
+		test('should not hide intelNotificationsContainer if _intelMentions is not empty', function() {
+			$('#qunit-fixture').append('<div id="IntelNotificationsContainer"></div>');
+			var Mentions = rintel.setupUserMentions({
+				intelNotificationsContainer: '#qunit-fixture #IntelNotificationsContainer'
+			});
+
+			Mentions._intelMentions = ['1','2'];
+
+			Mentions._removeFromIntelMentions('1');
+
+			var display = $('#qunit-fixture #IntelNotificationsContainer').css('display');
+			equal(display, 'block');
+		});
+
+	module('_removeFromHeadlineMentions');
+		test('should remove a userId from _headlineMentions', function() {
+			var Mentions = rintel.setupUserMentions();
+			Mentions._headlineMentions = ['1','2','3'];
+
+			Mentions._removeFromHeadlineMentions('2');
+
+			deepEqual(Mentions._headlineMentions, ['1','3']);
+		});
+
+		test('should hide headlineNotificationsContainer if _headlineMentions is empty', function() {
+			$('#qunit-fixture').append('<div id="HeadlineNotificationsContainer"></div>');
+			var Mentions = rintel.setupUserMentions({
+				headlineNotificationsContainer: '#qunit-fixture #HeadlineNotificationsContainer'
+			});
+
+			Mentions._headlineMentions = ['1'];
+
+			Mentions._removeFromHeadlineMentions('1');
+
+			var display = $('#qunit-fixture #HeadlineNotificationsContainer').css('display');
+			equal(display, 'none');
+		});
+
+		test('should not hide headlineNotificationsContainer if _headlineMentions is not empty', function() {
+			$('#qunit-fixture').append('<div id="HeadlineNotificationsContainer"></div>');
+			var Mentions = rintel.setupUserMentions({
+				headlineNotificationsContainer: '#qunit-fixture #IntelNotificationsContainer'
+			});
+
+			Mentions._headlineMentions = ['1','2'];
+
+			Mentions._removeFromHeadlineMentions('1');
+
+			var display = $('#qunit-fixture #HeadlineNotificationsContainer').css('display');
+			equal(display, 'block');
+		});
+
+
+	module('_removeFromUserNotification');
+		test('should remove a user from _userMentions when that user is not in any of the other 3 mentions', function() {
+			var Mentions = rintel.setupUserMentions();
+			Mentions._userMentions = {'david': '1', 'slaugh': '2'};
+			Mentions._bodyMentions = ['2'];
+			Mentions._intelMentions = [];
+			Mentions._headlineMentions = [];
+			
+			Mentions._removeFromUserNotification('1');
+
+			deepEqual(Mentions._userMentions, {'slaugh': '2'});
+		});
+
+		test('should NOT remove a user from _userMentions when that user is in any of the other 3 mentions', function() {
+			var Mentions = rintel.setupUserMentions();
+			Mentions._userMentions = {'david': '1', 'slaugh': '2'};
+			Mentions._bodyMentions = ['1'];
+			Mentions._intelMentions = ['2'];
+			Mentions._headlineMentions = ['1'];
+
+			Mentions._removeFromUserNotification('1');
+
+			deepEqual(Mentions._userMentions, {'david': '1', 'slaugh': '2'});
+		});
+
+	module('_addToBodyNotifications', {
+		beforeEach: function() {
+			$('#qunit-fixture').append('<div class="user-notification-box"></div>');
+			this.$userNotificationBox = $('#qunit-fixture .user-notification-box');
+		},
+		afterEach: function() {
+			$('#qunit-fixture').empty();
+		}
+	});
+		test('A user is successfully added to _bodyMentions', function() {
+			var Mentions = rintel.setupUserMentions();
+
+			Mentions._addToBodyNotifications({id: '1', name: 'david'});
+
+			deepEqual(Mentions._bodyMentions, ['1']);
+		});
+
+		test('_createNotificationBox is called', function() {
+			var Mentions = rintel.setupUserMentions();
+			var origCreateNotificationBox = Mentions._createNotificationBox;
+			Mentions._createNotificationBox = stubFn();
+
+			Mentions._addToBodyNotifications({id: '1', name: 'david'});
+
+			equal(Mentions._createNotificationBox.called, true);
+
+			Mentions._createNotificationBox = origCreateNotificationBox;
+		});
+
+		test('appends a notification box to the DOM', function() {
+			var options = {
+				bodyNotificationsContainer: '#qunit-fixture'
+			};
+			var Mentions = rintel.setupUserMentions(options);
+
+			Mentions._addToBodyNotifications({id: '1', name: 'david'});
+
+			var $notificationLabel = this.$userNotificationBox.find('.user-notification-label');
+			equal($notificationLabel.text(), 'david', 'Label exists');
+			equal(this.$userNotificationBox.css('display'), 'block', 'Notification area is displayed');
+		});
+
+
+	module('_addToIntelNotifications', {
+		beforeEach: function() {
+			$('#qunit-fixture').append('<div class="user-notification-box"></div>');
+			this.$userNotificationBox = $('#qunit-fixture .user-notification-box');
+		},
+		afterEach: function() {
+			$('#qunit-fixture').empty();
+		}
+	});
+		test('A user is successfully added to _intelMentions', function() {
+			var Mentions = rintel.setupUserMentions();
+
+			Mentions._addToIntelNotifications({id: '1', name: 'david'});
+
+			deepEqual(Mentions._intelMentions, ['1']);
+		});
+
+		test('_createNotificationBox is called', function() {
+			var Mentions = rintel.setupUserMentions();
+			var origCreateNotificationBox = Mentions._createNotificationBox;
+			Mentions._createNotificationBox = stubFn();
+
+			Mentions._addToIntelNotifications({id: '1', name: 'david'});
+
+			equal(Mentions._createNotificationBox.called, true);
+
+			Mentions._createNotificationBox = origCreateNotificationBox;
+		});
+
+		test('appends a notification box to the DOM', function() {
+			var options = {
+				intelNotificationsContainer: '#qunit-fixture'
+			};
+			var Mentions = rintel.setupUserMentions(options);
+
+			Mentions._addToIntelNotifications({id: '1', name: 'david'});
+
+			var $notificationLabel = this.$userNotificationBox.find('.user-notification-label');
+			equal($notificationLabel.text(), 'david', 'Label exists');
+			equal(this.$userNotificationBox.css('display'), 'block', 'Notification area is displayed');
+		});
+
+	module('_addToHeadlineNotifications', {
+		beforeEach: function() {
+			$('#qunit-fixture').append('<div class="user-notification-box"></div>');
+			this.$userNotificationBox = $('#qunit-fixture .user-notification-box');
+		},
+		afterEach: function() {
+			$('#qunit-fixture').empty();
+		}
+	});
+		test('A user is successfully added to _headlineMentions', function() {
+			var Mentions = rintel.setupUserMentions();
+
+			Mentions._addToHeadlineNotifications({id: '1', name: 'david'});
+
+			deepEqual(Mentions._headlineMentions, ['1']);
+		});
+
+		test('_createNotificationBox is called', function() {
+			var Mentions = rintel.setupUserMentions();
+			var origCreateNotificationBox = Mentions._createNotificationBox;
+			Mentions._createNotificationBox = stubFn();
+
+			Mentions._addToHeadlineNotifications({id: '1', name: 'david'});
+
+			equal(Mentions._createNotificationBox.called, true);
+
+			Mentions._createNotificationBox = origCreateNotificationBox;
+		});
+
+		test('appends a notification box to the DOM', function() {
+			var options = {
+				headlineNotificationsContainer: '#qunit-fixture'
+			};
+			var Mentions = rintel.setupUserMentions(options);
+
+			Mentions._addToHeadlineNotifications({id: '1', name: 'david'});
+
+			var $notificationLabel = this.$userNotificationBox.find('.user-notification-label');
+			equal($notificationLabel.text(), 'david', 'Label exists');
+			equal(this.$userNotificationBox.css('display'), 'block', 'Notification area is displayed');
+		});
+
+	module('functions to see if a user has already been mentioned');
+		test('_inBodyMentions', function() {
+			var Mentions = rintel.setupUserMentions();
+
+			notOk(Mentions._inBodyMentions(1), 'User not in _bodyMentions');
+
+			Mentions._addToBodyNotifications({id: '1', name: 'david'});
+			ok(Mentions._inBodyMentions('1'), 'User in _bodyMentions');
+		});
+
+		test('_inIntelMentions', function() {
+			var Mentions = rintel.setupUserMentions();
+
+			notOk(Mentions._inIntelMentions('1'), 'User not in _intelMentions');
+
+			Mentions._addToIntelNotifications({id: '1', name: 'david'});
+			ok(Mentions._inIntelMentions('1'), 'User in _intelMentions');
+		});
+
+		test('_inHeadlineMentions', function() {
+			var Mentions = rintel.setupUserMentions();
+
+			notOk(Mentions._inHeadlineMentions('1'), 'User not in _headlineMentions');
+
+			Mentions._addToHeadlineNotifications({id: '1', name: 'david'});
+			ok(Mentions._inHeadlineMentions('1'), 'User in _headlineMentions');
+		});
+</script>
