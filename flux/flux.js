@@ -75,7 +75,7 @@ var CustomEvents = function() {
 				fn(data);
 			});
 		}
-	}
+	};
 };
 
 var actionCreator = function(e, type) {
