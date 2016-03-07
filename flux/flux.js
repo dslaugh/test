@@ -101,22 +101,12 @@ extend(nameStore, {
 		return nameStore.names;
 	}
 });
-// nameStore.names = [];
-// nameStore.notify = function(action) {
-// 	if (action.type === 'name-added') {
-// 		nameStore.names.push(action.data);
-// 		nameStore.emit('name-added');
-// 	}
-// };
-// nameStore.getNames = function() {
-// 	return nameStore.names;
-// };
 
 var nameControllerView = {
 	notify: function() {
 		var names = nameStore.getNames();
 		var namesDOM = names.reduce(function(prevVal, currVal) {
-			return prevVal + '<li>' + currVal + '</li>';
+			return prevVal + '<li class="names-item">' + currVal + '</li>';
 		}, '');
 
 		document.getElementById('names').innerHTML = namesDOM;
@@ -129,11 +119,18 @@ var textInputControllerView = {
 	}
 };
 
+var bindUIElements = function() {
+	document.getElementById('name').addEventListener('change', function(e) {
+		actionCreator(e, 'name-added');
+	});
+};
 
 var initialize = function() {
 	dispatcher.on('action-received', nameStore.notify);
 	nameStore.on('name-added', nameControllerView.notify);
 	nameStore.on('name-added', textInputControllerView.notify);
+
+	bindUIElements();
 };
 
 initialize();

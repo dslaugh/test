@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<h1>Speech synthesis</h1>
+<select id="voices"></select>
+<!-- <input size="100" type="text" id="sayThis" /> -->
+<textarea id="sayThis" ></textarea>
+<button type="button" id="sayIt">Say It</button>
+<script>
+// console.log('https://hacks.mozilla.org/2016/01/firefox-and-the-web-speech-api/');
+
+// var synth = window.speechSynthesis;
+// var badNewsVoice;
+// var voices;
+// var voicesSelect = document.querySelector('#voices');
+// var selectedVoice = 1;
+// var utterThis;
+// synth.onvoiceschanged = function() {
+// 	if (voicesSelect.childNodes.length <= 0) {
+// 		voices = synth.getVoices();
+// 		voices.forEach(function(voice, i) {
+// 			if (voice.lang == 'en-US') {
+// 				var opt = document.createElement('option');
+// 				opt.innerHTML = voice.name;
+// 				opt.value = i;
+// 				voicesSelect.appendChild(opt);
+// 			}
+// 		});
+// 	}
+// }
+
+// function setVoice(e) {
+// 	selectedVoice = e.target.value;
+// }
+
+// function sayIt() {
+// 	var whatToSay = document.querySelector('#sayThis').value;
+// 	utterThis = new SpeechSynthesisUtterance(whatToSay);
+// 	utterThis.voice = voices[selectedVoice];
+// 	utterThis.rate = 1;
+// 	utterThis.pitch = 1;
+// 	synth.speak(utterThis);
+// }
+
+var speech = SpeechSynthesis();
+speech.setDropdownElement('#voices');
+speech.setInputElement('#sayThis');
+speech.setButtonElement('#sayIt')
+speech.populateVoices();
+
+
+function SpeechSynthesis() {
+	var synth = window.speechSynthesis;
+	var voices = [];
+	var dropdownElement;
+	var inputElement;
+	var buttonElement;
+	var selectedVoice = 1;
+	var utterThis;
+
+	synth.onvoiceschanged = function() {
+		if (voices.length < 1) {
+			populateVoices();
+		}
+	};
+
+	function setDropdownElement(selector) {
+		dropdownElement = document.querySelector(selector);
+		dropdownElement.onchange = function(e) {
+			setSelectedVoice(e.target.value);
+		}
+	}
+
+	function setInputElement(selector) {
+		inputElement = document.querySelector(selector);
+	}
+
+	function setButtonElement(selector) {
+		buttonElement = document.querySelector(selector);
+		buttonElement.onclick = sayIt;
+	}
+
+	function populateVoices() {
+		voices = synth.getVoices();
+		voices.forEach(function(voice, i) {
+			var opt = document.createElement('option');
+			opt.innerHTML = voice.name + ' (' + voice.lang + ')';
+			opt.value = i;
+			if (i === selectedVoice) {
+				opt.selected = 'SELECTED';
+			}
+			dropdownElement.appendChild(opt);
+		});		
+	}
+
+	function setSelectedVoice(selectedIndex) {
+		selectedVoice = selectedIndex;
+	}
+
+	function sayIt() {
+		var whatToSay = inputElement.value;
+		utterThis = new SpeechSynthesisUtterance(whatToSay);
+		utterThis.voice = voices[selectedVoice];
+		synth.speak(utterThis);
+	}	
+
+	return {
+		setDropdownElement: setDropdownElement,
+		setInputElement: setInputElement,
+		setButtonElement: setButtonElement,
+		setSelectedVoice: setSelectedVoice,
+		populateVoices: populateVoices,
+		sayIt: sayIt
+	};
+}
+
+</script>
+</body>
+</html>
