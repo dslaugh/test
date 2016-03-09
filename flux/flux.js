@@ -131,7 +131,7 @@ var bindUIElements = function() {
 	document.querySelector('#name').addEventListener('change', function(e) {
 		actionCreator(e, 'name-added');
 	});
-	document.querySelector('#names').addEventListener('click', function(e) {
+	document.querySelector('#names').addEventListener('dblclick', function(e) {
 		if (e.target.className.match(/names-item/)) {
 			actionCreator(e, 'name-deleted');
 		}

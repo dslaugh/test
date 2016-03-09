@@ -344,6 +344,7 @@ var cellDisplacement = "69px";
         }
 		
 		function start() {
+debugger;
 			var init = new Node(0, [[6,4,7],[8,5,0],[3,2,1]], 1, 2, 0)
 			var goal = new Node(0, [[1,2,3],[4,5,6],[7,8,0]], 2, 2, 0)
 			

@@ -24,27 +24,46 @@ var Model = {
 	addName: function(name) {
 		this.names.push(name);
 		this.events.emit('name-added');
+	},
+	removeName: function(name) {
+		var nameToRemoveIndex = this.names.indexOf(name);
+		this.names.splice(nameToRemoveIndex, 1);
+		this.events.emit('name-removed');
 	}
 };
 
 var View = {
-	nameInput: document.getElementById('name'),
-	nameList: document.getElementById('names'),
+	nameInput: document.querySelector('#name'),
+	nameList: document.querySelector('#names'),
 	renderNames: function() {
 		View.nameList.innerHTML = Model.names.reduce(function(prev, curr) {
-			return prev + '<li>' + curr + '</li>';
+			return prev + '<li class="names-item">' + curr + '</li>';
 		}, '');
 	},
 	resetNameInput: function() {
 		View.nameInput.value = '';
+	},
+	bindUIEvents: function() {
+		this.nameInput.addEventListener('change', Controller.addName);
+		this.nameList.addEventListener('dblclick', function(e) {
+			if (e.target.className.match(/names-item/)) {
+				Model.removeName(e.target.innerText);
+			}
+		});
 	}
 };
 
 var Controller = {
-	handleAddName: function(e) {
+	addName: function(e) {
 		Model.addName(e.target.value);
-	},
+	}
 };
 
-Model.events.on('name-added', View.renderNames);
-Model.events.on('name-added', View.resetNameInput);
+function initialize() {
+	Model.events.on('name-added', View.renderNames);
+	Model.events.on('name-removed', View.renderNames);
+	Model.events.on('name-added', View.resetNameInput);
+	
+	View.bindUIEvents();
+}
+initialize();
