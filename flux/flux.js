@@ -83,6 +83,9 @@ var actionCreator = function(e, type) {
 	if (type === 'name-added') {
 		action = {type: type, data: e.target.value};
 	}
+	if (type === 'name-deleted') {
+		action = {type: type, data: e.target.innerText};
+	}
 	dispatcher.emit('action-received', action);
 };
 
@@ -95,6 +98,11 @@ extend(nameStore, {
 		if (action.type === 'name-added') {
 			nameStore.names.push(action.data);
 			nameStore.emit('name-added');
+		}
+		if (action.type === 'name-deleted') {
+			var nameToDelete = nameStore.names.indexOf(action.data);
+			nameStore.names.splice(nameToDelete, 1);
+			nameStore.emit('name-deleted');
 		}
 	},
 	getNames: function() {
@@ -109,19 +117,24 @@ var nameControllerView = {
 			return prevVal + '<li class="names-item">' + currVal + '</li>';
 		}, '');
 
-		document.getElementById('names').innerHTML = namesDOM;
+		document.querySelector('#names').innerHTML = namesDOM;
 	}
 };
 
 var textInputControllerView = {
 	notify: function() {
-		document.getElementById('name').value = '';
+		document.querySelector('#name').value = '';
 	}
 };
 
 var bindUIElements = function() {
-	document.getElementById('name').addEventListener('change', function(e) {
+	document.querySelector('#name').addEventListener('change', function(e) {
 		actionCreator(e, 'name-added');
+	});
+	document.querySelector('#names').addEventListener('click', function(e) {
+		if (e.target.className.match(/names-item/)) {
+			actionCreator(e, 'name-deleted');
+		}
 	});
 };
 
@@ -129,6 +142,7 @@ var initialize = function() {
 	dispatcher.on('action-received', nameStore.notify);
 	nameStore.on('name-added', nameControllerView.notify);
 	nameStore.on('name-added', textInputControllerView.notify);
+	nameStore.on('name-deleted', nameControllerView.notify);
 
 	bindUIElements();
 };
