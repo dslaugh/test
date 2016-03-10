@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Foosball Match Up</title>
+	<style>
+		.box {
+			float:left; 
+			border:1px solid #ccc; 
+			margin: 0 10px;
+			padding: 20px;
+		}
+		.box ul {
+			list-style-position: outside;
+		}
+		.box input[type="text"] {
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div>All Players</div>
+		<input type="text" id="PlayerInput" placeholder="Add player"/>
+		<ul id="AllPlayers"></ul>
+		<button type="button" id="CreateTeamsBtn">Create Teams</button>
+	</div>
+	<div class="box">
+			<div>Team 1</div>
+			<ul id="Team1"></ul>
+	</div>
+	<div class="box">
+		<div>Team 2</div>
+		<ul id="Team2"></ul>
+	</div>
+
+	<div style="clear: both;">
+		
+	</div>
+
+	<script>
+		var CustomEvents = function() {
+			var subscribers = {};
+			return {
+				on: function(topic, fn) {
+					if (typeof topic === 'string' && typeof fn === 'function') {
+						subscribers[topic] = subscribers[topic] || [];
+						subscribers[topic].push(fn);
+					}
+				},
+				off: function(topic, fn) {
+					subscribers[topic].splice(subscribers[topic].indexOf(fn), 1);
+				},
+				emit: function(topic, data) {
+					subscribers[topic].forEach(function(fn) {
+						fn(data);
+					});
+				}
+			};
+		};
+
+		var Model = {
+			players: [],
+			team1Players: [],
+			team2Players: [],
+			events: CustomEvents(),
+			addPlayer: function(playerName) {
+				Model.players.push(playerName);
+				Model.events.emit('player-added', Model.players);
+			},
+			addPlayerToTeam1: function(player) {
+				Model.team1Players.push(player);
+				Model.events.emit('team1-player-added', Model.team1Players);
+			},
+			addPlayerToTeam2: function(player) {
+				Model.team2Players.push(player);
+				Model.events.emit('team2-player-added', Model.team2Players);
+			},
+			getPlayers: function() {
+				return Model.players.slice();
+			},
+			resetTeams: function() {
+				Model.team1Players = [];
+				Model.team2Players = [];			
+			}
+		};
+
+		var View = {
+			allPlayersList: document.querySelector('#AllPlayers'),
+			team1List: document.querySelector('#Team1'),
+			team2List: document.querySelector('#Team2'),
+			playerInput: document.querySelector('#PlayerInput'),
+			createTeamsBtn: document.querySelector('#CreateTeamsBtn'),
+			renderAllPlayers: function(players) {
+				View.allPlayersList.innerHTML = players.reduce(function(prevVal, currVal) {
+					return prevVal + '<li class="player">' + currVal + '</li>';
+				}, '');
+			},
+			resetPlayerInput: function() {
+				View.playerInput.value = '';
+			},
+			renderTeam1List: function(team1Players) {
+				View.team1List.innerHTML = team1Players.reduce(function(prevVal, currVal) {
+					return prevVal + '<li class="player">' + currVal + '</li>';
+				}, '');
+			},
+			renderTeam2List: function(team2Players) {
+				View.team2List.innerHTML = team2Players.reduce(function(prevVal, currVal) {
+					return prevVal + '<li class="player">' + currVal + '</li>';
+				}, '');
+			},
+			bindUIEvents: function() {
+				View.playerInput.addEventListener('change', Controller.addPlayer);
+				View.createTeamsBtn.addEventListener('click', Controller.createTeams);
+			}
+		};
+
+		var Controller = {
+			initialize: function() {
+				Model.events.on('team1-player-added', View.renderTeam1List);
+				Model.events.on('team2-player-added', View.renderTeam2List);
+				Model.events.on('player-added', View.renderAllPlayers);
+				Model.events.on('player-added', View.resetPlayerInput);
+				View.bindUIEvents();			
+			},
+			addPlayer: function(e) {
+				Model.addPlayer(e.target.value);
+			},
+			createTeams: function() {
+				Model.resetTeams();
+
+				var players = Model.getPlayers();
+				while(players.length > 0) {
+					var rand = Math.floor(Math.random() * players.length);
+					if (players.length % 2 === 0) {
+						Model.addPlayerToTeam1(players[rand]);
+					} else {
+						Model.addPlayerToTeam2(players[rand]);
+					}
+					players.splice(players.indexOf(players[rand]), 1);
+				}
+			}
+		};
+
+		Controller.initialize();
+	</script>
+</body>
+</html>
