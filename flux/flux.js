@@ -101,8 +101,10 @@ extend(nameStore, {
 		}
 		if (action.type === 'name-deleted') {
 			var nameToDelete = nameStore.names.indexOf(action.data);
-			nameStore.names.splice(nameToDelete, 1);
-			nameStore.emit('name-deleted');
+			if (nameToDelete > -1) {
+				nameStore.names.splice(nameToDelete, 1);
+				nameStore.emit('name-deleted');
+			}
 		}
 	},
 	getNames: function() {

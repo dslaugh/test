@@ -258,12 +258,15 @@ var cellDisplacement = "69px";
 				if (current.strRepresentation == this.goal.strRepresentation) 
 					return current
 				
+console.log(this.queue);
+// debugger;
 				this.expandNode(current)
 			}
 		}
 		
 		AStar.prototype.expandNode = function (node) 
         {
+// debugger;
             var temp = ''
             var newState = ''
             var col = node.emptyCol
@@ -353,6 +356,7 @@ debugger;
 			var startTime = new Date()
 			// Execute AStar
 			var result = astar.execute()
+debugger;
 			// To measure time taken by the algorithm
 			var endTime = new Date()
 			alert('Completed in: ' + (endTime - startTime) + ' milliseconds')
