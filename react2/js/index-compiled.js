@@ -36,8 +36,8 @@ var MyOption = React.createClass({
 
     render: function render() {
         var selectedStyle = {
-            'background-color': 'red',
-            color: '#fff',
+            'backgroundColor': '#ccc',
+            color: '#333',
             cursor: 'pointer'
         };
         var unselectedStyle = {

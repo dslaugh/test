@@ -13,7 +13,7 @@ var MySelect = React.createClass({
         var mySelectStyle = {
             border: '1px solid #999',
             display: 'inline-block',
-            padding: '5px'
+            padding: '5px',
         };
 
         return (
@@ -30,8 +30,8 @@ var MySelect = React.createClass({
 var MyOption = React.createClass({
     render: function() {
         var selectedStyle = {
-            'background-color': 'red',
-            color: '#fff',
+            'backgroundColor': '#ccc',
+            color: '#333',
             cursor: 'pointer'
         };
         var unselectedStyle = {
