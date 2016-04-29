@@ -4,8 +4,8 @@
 	<title>Foosball Match Up</title>
 	<style>
 		.box {
-			float:left; 
-			border:1px solid #ccc; 
+			float:left;
+			border:1px solid #ccc;
 			margin: 0 10px;
 			padding: 20px;
 		}
@@ -15,9 +15,16 @@
 		.box input[type="text"] {
 			margin-top: 10px;
 		}
+		.winner-btn {
+			display: none;
+		}
 	</style>
 </head>
 <body>
+	<div class="box">
+		<div>History</div>
+		<ul id="History"></ul>
+	</div>
 	<div class="box">
 		<div>Default Players</div>
 		<ul id="DefaultPlayers"></ul>
@@ -32,10 +39,12 @@
 	<div class="box">
 			<div>Team 1</div>
 			<ul id="Team1"></ul>
+			<button id="Team1WinnerBtn" class="winner-btn">Winner</button>
 	</div>
 	<div class="box">
 		<div>Team 2</div>
 		<ul id="Team2"></ul>
+		<button id="Team2WinnerBtn" class="winner-btn">Winner</button>
 	</div>
 
 	<div style="clear: both;"></div>
@@ -55,9 +64,11 @@
 					subscribers[topic].splice(subscribers[topic].indexOf(fn), 1);
 				},
 				emit: function(topic, data) {
-					subscribers[topic].forEach(function(fn) {
-						fn(data);
-					});
+					if (subscribers[topic]) {
+						subscribers[topic].forEach(function(fn) {
+							fn(data);
+						});
+					}
 				}
 			};
 		};
@@ -67,6 +78,8 @@
 			players: [],
 			team1Players: [],
 			team2Players: [],
+			winner: false,
+			history: [],
 			events: CustomEvents(),
 			addPlayer: function(playerName) {
 				Model.players.push(playerName);
@@ -81,11 +94,28 @@
 				Model.events.emit('team2-player-added', Model.team2Players);
 			},
 			getPlayers: function() {
-				return Model.players.slice();
+				return Model.players.slice(); // using slice to clone array.
+			},
+			getWinnerData: function() {
+				return {
+					team1: Model.team1Players,
+					team2: Model.team2Players,
+					winner: Model.winner
+				};
+			},
+			setWinner: function(team) {
+				Model.winner = team;
+				var winnerData = Model.getWinnerData();
+				Model.history.push(winnerData);
+				Model.events.emit('winner-set', Model.history);
+			},
+			setHistory: function(history) {
+				Model.history = history;
+				Model.events.emit('history-set', history);
 			},
 			resetTeams: function() {
 				Model.team1Players = [];
-				Model.team2Players = [];			
+				Model.team2Players = [];
 			}
 		};
 
@@ -97,6 +127,9 @@
 			createTeamsBtn: document.querySelector('#CreateTeamsBtn'),
 			defaultPlayersList: document.querySelector('#DefaultPlayers'),
 			useDefaultBtn: document.querySelector('#UseDefaultBtn'),
+			team1WinnerBtn: document.querySelector('#Team1WinnerBtn'),
+			team2WinnerBtn: document.querySelector('#Team2WinnerBtn'),
+			historyList: document.querySelector('#History'),
 			renderAllPlayers: function(players) {
 				View.allPlayersList.innerHTML = players.reduce(function(prevVal, currVal) {
 					return prevVal + '<li class="player">' + currVal + '</li>';
@@ -104,6 +137,12 @@
 			},
 			resetPlayerInput: function() {
 				View.playerInput.value = '';
+			},
+			renderHistory: function(history) {
+				View.historyList.innerHTML = Model.history.reduce(function(prevVal, currVal) {
+					return prevVal + '<li>' + currVal.team1.join(', ') + ' vs ' + currVal.team2.join(', ') + ' Winner: ' + currVal[currVal.winner].join(', ') + '</li>';
+					// return prevVal + '<div>' + currVal.team1[0] + ' & ' + currVal.team1[1] + ' vs ' + currVal.team2[0] + ' & ' + currVal.team2[1] + ' Winner: ' + currVal[currVal.winner] + '</div>';
+				}, '');
 			},
 			renderTeam1List: function(team1Players) {
 				View.team1List.innerHTML = team1Players.reduce(function(prevVal, currVal) {
@@ -124,7 +163,10 @@
 				View.playerInput.addEventListener('change', Controller.addPlayer);
 				View.createTeamsBtn.addEventListener('click', Controller.createTeams);
 				View.useDefaultBtn.addEventListener('click', Controller.useDefaultPlayers);
+				View.team1WinnerBtn.addEventListener('click', Controller.team1Wins);
+				View.team2WinnerBtn.addEventListener('click', Controller.team2Wins);
 				window.addEventListener('load', Controller.showDefaultPlayers);
+				window.addEventListener('load', Controller.getHistoryFromLocalStorage);
 			}
 		};
 
@@ -134,6 +176,8 @@
 				Model.events.on('team2-player-added', View.renderTeam2List);
 				Model.events.on('player-added', View.renderAllPlayers);
 				Model.events.on('player-added', View.resetPlayerInput);
+				Model.events.on('winner-set', Controller.recordWinnerData);
+				Model.events.on('history-set', View.renderHistory);
 				View.bindUIEvents();
 			},
 			addPlayer: function(e) {
@@ -152,6 +196,8 @@
 					}
 					players.splice(players.indexOf(players[rand]), 1);
 				}
+
+				Controller.showWinnerBtns();
 			},
 			showDefaultPlayers: function() {
 				View.renderDefaultPlayers(Model.defaultPlayers);
@@ -160,9 +206,29 @@
 				Model.defaultPlayers.forEach(function(player) {
 					Model.addPlayer(player);
 				});
+			},
+			showWinnerBtns: function() {
+				var winnerBtns = Array.prototype.slice.call(document.querySelectorAll('.winner-btn'));
+				winnerBtns.forEach(function(btn) {
+					btn.style.display = 'inline-block';
+				});
+			},
+			team1Wins: function() {
+				Model.setWinner('team1');
+			},
+			team2Wins: function() {
+				Model.setWinner('team2');
+			},
+			recordWinnerData: function(data) {
+				window.localStorage.setItem('foosball_history', JSON.stringify(data));
+				Controller.getHistoryFromLocalStorage();
+			},
+			getHistoryFromLocalStorage: function() {
+				var history = JSON.parse(window.localStorage.getItem('foosball_history')) || [];
+				Model.setHistory(history);
 			}
 		};
-
+		
 		Controller.initialize();
 	</script>
 </body>

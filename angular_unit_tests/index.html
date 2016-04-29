@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Testing Angular Unit Testing</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.10/angular.js"></script>
+    </head>
+    <body>
+        <div ng-controller="CalculatorController">
+            <input ng-model="x" type="number" />
+            <input ng-model="y" type="number" />
+            <strong>{{z}}</strong>
+            <input type="button" ng-click="sum()" value="+" />
+        </div>
+
+        <script>
+            angular.module('calculatorApp', []);
+
+            angular.module('calculatorApp')
+            .controller('CalculatorController', function CalculatorController($scope) {
+                $scope.z = 0;
+                $scope.sum = function() {
+                    $scope.z = $scope.x + $scope.y;
+                };
+            });
+
+            angular.element(document).ready(function() {
+                angular.bootstrap(document, ['calculatorApp']);
+            });
+
+        </script>
+    </body>
+</html>
