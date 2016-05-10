@@ -32,4 +32,13 @@ angular.module('simple', [])
         return input.toUpperCase();
     };
 }])
+.directive('nameList', function() {
+    return {
+        restrict: 'E',
+        scope: {
+            names: '=',
+        },
+        template: '<ul><li ng-repeat="name in names">{{name.value | upper}}</li></ul>',
+    }
+})
 ;

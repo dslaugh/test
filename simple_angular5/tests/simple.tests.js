@@ -82,3 +82,24 @@ describe('upper filter', function() {
         expect(upper('hello')).toEqual('HELLO');
     });
 });
+
+describe('name-list directive', function() {
+    var $compile;
+    var $rootScope;
+
+    beforeEach(module('simple'));
+
+    beforeEach(inject(function(_$compile_, _$rootScope_) {
+        $compile = _$compile_;
+        $rootScope = _$rootScope_;
+    }));
+
+    it('should create an unordered list with the names passed to it', function() {
+        $rootScope.names = [{value: 'David'}];
+        var element = $compile('<name-list names="names"></name-list>')($rootScope);
+
+        $rootScope.$digest();
+
+        expect(element.html()).toContain('DAVID</li>');
+    });
+})
