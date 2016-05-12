@@ -82,8 +82,8 @@ describe('locStore service', function() {
     });
 
     it('the parameters are being set correctly', function() {
-        window.localStorage.setItem('names', 'dave');
-        expect(window.localStorage.setItem.args).toEqual(['names', 'dave']);
+        locStore.set('names', 'dave');
+        expect(window.localStorage.setItem.args).toEqual(['names', '"dave"']);
     });
 });
 

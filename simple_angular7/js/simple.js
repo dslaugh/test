@@ -1,14 +1,20 @@
 angular.module('simple', [])
-.controller('SimpleCtrl', ['$scope', function($scope) {
+.controller('SimpleCtrl', ['$scope', 'locStore', function($scope, locStore) {
     $scope.names = [];
     $scope.newName;
 
     $scope.addName = function($event) {
-        if ($event.keyCode === 13) {
+        if (($event.keyCode === 13) && ($scope.newName.length > 0)) {
             $scope.names.push({value: $scope.newName});
             $scope.newName = '';
+            $scope.writeToLocalStorage();
         }
     }
+
+    $scope.writeToLocalStorage = function() {
+        locStore.set('names', $scope.names);
+    }
+
 }])
 .service('locStore', [function() {
     this.set = function(name, data) {

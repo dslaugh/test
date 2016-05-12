@@ -5,10 +5,10 @@
         <title>Simple Angular 7</title>
         <script src="lib/angular.min.js"></script>
     </head>
-    <body>
+    <body ng-app="simple" ng-controller="SimpleCtrl">
         <input type="text" ng-model="newName" ng-keypress="addName($event)" />
         <ds-name-list names="names"></ds-name-list>
-        
+
         <script src="js/simple.js"></script>
     </body>
 </html>

@@ -15,6 +15,18 @@
 		.box input[type="text"] {
 			margin-top: 10px;
 		}
+		.history-table {
+			margin-top: 5px;
+			border-collapse: collapse;
+		}
+		.history-table th {
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+		.history-table td,
+		.history-table th {
+			padding: 5px 5px;
+			border: 1px solid #ccc;
+		}
 		.winner-btn {
 			display: none;
 		}
@@ -23,7 +35,16 @@
 <body>
 	<div class="box">
 		<div>History</div>
-		<ul id="History"></ul>
+		<table class="history-table">
+			<thead>
+				<tr>
+					<th>Team 1</th>
+					<th>Team 2</th>
+					<th>Winner</th>
+				</tr>
+			</thead>
+			<tbody id="History"></tbody>
+		</table>
 	</div>
 	<div class="box">
 		<div>Default Players</div>
@@ -140,7 +161,8 @@
 			},
 			renderHistory: function(history) {
 				View.historyList.innerHTML = Model.history.reduce(function(prevVal, currVal) {
-					return prevVal + '<li>' + currVal.team1.join(', ') + ' vs ' + currVal.team2.join(', ') + ' Winner: ' + currVal[currVal.winner].join(', ') + '</li>';
+					return prevVal + '<tr><td>' + currVal.team1.join(', ') + '</td><td>' + currVal.team2.join(', ') + '</td><td>' + currVal[currVal.winner].join(', ') + '</td></tr>';
+					// return prevVal + '<li>' + currVal.team1.join(', ') + ' vs ' + currVal.team2.join(', ') + ' Winner: ' + currVal[currVal.winner].join(', ') + '</li>';
 					// return prevVal + '<div>' + currVal.team1[0] + ' & ' + currVal.team1[1] + ' vs ' + currVal.team2[0] + ' & ' + currVal.team2[1] + ' Winner: ' + currVal[currVal.winner] + '</div>';
 				}, '');
 			},
@@ -187,6 +209,9 @@
 				Model.resetTeams();
 
 				var players = Model.getPlayers();
+				if (players.length === 0) {
+					return false;
+				}
 				while(players.length > 0) {
 					var rand = Math.floor(Math.random() * players.length);
 					if (players.length % 2 === 0) {
@@ -228,7 +253,7 @@
 				Model.setHistory(history);
 			}
 		};
-		
+
 		Controller.initialize();
 	</script>
 </body>
