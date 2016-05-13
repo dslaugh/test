@@ -11,7 +11,7 @@ angular.module('simple', [])
     };
 }])
 .service('locStore', [function() {
-this.set = function(name, data) {
+    this.set = function(name, data) {
 		window.localStorage.setItem(name, JSON.stringify(data));
 	}
 	this.get = function(name) {
