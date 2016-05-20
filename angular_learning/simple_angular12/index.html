@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Simple Angular 12</title>
+        <script src="lib/angular.min.js"></script>
+    </head>
+    <body ng-app="simple" ng-controller="SimpleCtrl">
+        <input type="text" ng-model="newName" ng-keypress="addName($event)" />
+        <ul>
+            <li ng-repeat="name in names">{{name.value}}</li>
+        </ul>
+
+        <script src="js/simple.js"></script>
+    </body>
+</html>
