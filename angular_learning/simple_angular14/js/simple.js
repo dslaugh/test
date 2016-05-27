@@ -1,4 +1,4 @@
-angular.module('simple', ['simple_services', 'simple_directives'])
+angular.module('simple', ['simple_directives', 'simple_services'])
 .controller('SimpleCtrl', ['$scope', 'locStore', function($scope, locStore) {
     $scope.names = [];
     $scope.newName = '';
@@ -7,7 +7,11 @@ angular.module('simple', ['simple_services', 'simple_directives'])
         if ($event.keyCode === 13) {
             $scope.names.push({value: $scope.newName});
             $scope.newName = '';
-            locStore.set('names', $scope.names);
+            $scope.writeToLocalStorage();
         }
-    }
+    };
+
+    $scope.writeToLocalStorage = function() {
+        locStore.set('names', $scope.names);
+    };
 }]);

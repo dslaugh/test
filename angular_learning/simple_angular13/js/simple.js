@@ -1,4 +1,4 @@
-angular.module('simple', ['simple_services', 'simple_directives'])
+angular.module('simple', ['simple_directives', 'simple_services'])
 .controller('SimpleCtrl', ['$scope', 'locStore', function($scope, locStore) {
     $scope.names = [];
     $scope.newName = '';

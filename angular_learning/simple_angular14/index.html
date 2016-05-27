@@ -2,19 +2,16 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Simple Angular 12</title>
+        <title>Simple Angular 14</title>
+
         <script src="lib/angular.min.js"></script>
     </head>
     <body ng-app="simple" ng-controller="SimpleCtrl">
         <input type="text" ng-model="newName" ng-keypress="addName($event)" />
-        <ds-name-list names="names"><ds-name-list>
-        <!-- <ul>
-            <li ng-repeat="name in names">{{name.value | upper}}</li>
-        </ul> -->
-
+            <ds-name-list names="names"></ds-name-list>
         <script src="js/simple.js"></script>
-        <script src="js/simple_services.js"></script>
-        <script src="js/simple_filters.js"></script>
         <script src="js/simple_directives.js"></script>
+        <script src="js/simple_filters.js"></script>
+        <script src="js/simple_services.js"></script>
     </body>
 </html>
