@@ -162,8 +162,6 @@
 			renderHistory: function(history) {
 				View.historyList.innerHTML = Model.history.reduce(function(prevVal, currVal) {
 					return prevVal + '<tr><td>' + currVal.team1.join(', ') + '</td><td>' + currVal.team2.join(', ') + '</td><td>' + currVal[currVal.winner].join(', ') + '</td></tr>';
-					// return prevVal + '<li>' + currVal.team1.join(', ') + ' vs ' + currVal.team2.join(', ') + ' Winner: ' + currVal[currVal.winner].join(', ') + '</li>';
-					// return prevVal + '<div>' + currVal.team1[0] + ' & ' + currVal.team1[1] + ' vs ' + currVal.team2[0] + ' & ' + currVal.team2[1] + ' Winner: ' + currVal[currVal.winner] + '</div>';
 				}, '');
 			},
 			renderTeam1List: function(team1Players) {
