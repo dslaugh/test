@@ -1,0 +1,7 @@
+.main-content {
+	width: 100%;
+	display: flex;
+}
+.main-content > div {
+	width: 50%;
+}
