@@ -1,7 +1,21 @@
+header h1 {
+	background-color: blue;
+	color: white;
+	padding: 10px;
+}
+h1, h2 {
+	text-align: center;
+}
 .main-content {
 	width: 100%;
 	display: flex;
+	justify-content: space-around;
 }
 .main-content > div {
-	width: 50%;
+	border: 1px solid #333;
+	width: 45%;
+	text-align: center;
+}
+#TimeRemaining, #BlindsSchedule {
+	font-size: 60px;
 }
