@@ -45,7 +45,7 @@ var Model =  {
 	],
 	currentBlindIndex: 0,
 	roundTime: {
-		minutes: 1,
+		minutes: 25,
 		seconds: 0
 	},
 	currentRoundTime: {},
