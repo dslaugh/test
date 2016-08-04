@@ -62,23 +62,20 @@ var Model =  {
 		if (this.currentRoundTime.minutes === 0 && this.currentRoundTime.seconds === 0) {
 			this.resetCurrentRoundTime();
 			this.events.emit('newRoundStarted');
-			if (this.currentRoundTime.seconds === 0) {
-				this.currentRoundTime.minutes = this.currentRoundTime.minutes - 1;
-				this.currentRoundTime.seconds = 59;
-			} else {
-				this.currentRoundTime.seconds = this.currentRoundTime.seconds - 1;
-			}
-		} else if (this.currentRoundTime.seconds === 0) {
+		}
+
+		if (this.currentRoundTime.seconds === 0) {
 			this.currentRoundTime.minutes = this.currentRoundTime.minutes - 1;
 			this.currentRoundTime.seconds = 59;
 		} else {
 			this.currentRoundTime.seconds = this.currentRoundTime.seconds - 1;
 		}
-		this.events.emit('timeUpdated', this.currentRoundTime);
 
 		if (this.currentRoundTime.minutes <= 1) {
 			this.events.emit('roundEndWarning', this.currentRoundTime);
-		} 
+		}
+
+		this.events.emit('timeUpdated', this.currentRoundTime);
 	},
 	initializeBlinds: function() {
 		this.events.emit('blindsInitialized', this.blindsSchedule[this.currentBlindIndex]);
