@@ -32,3 +32,15 @@ h1 {
 	border: 1px solid #999;
 	cursor: pointer;
 }
+.normal {
+	background-color: white;
+	color: black;
+}
+.flash1 {
+	background-color: red;
+	color: yellow;
+}
+.flash2 {
+	background-color: yellow;
+	color: red;
+}

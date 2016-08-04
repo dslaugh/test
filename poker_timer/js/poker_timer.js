@@ -59,17 +59,26 @@ var Model =  {
 		this.currentRoundTime.seconds = this.roundTime.seconds;
 	},
 	updateTimeRemaining: function() {
-		if (this.currentRoundTime.seconds === 0) {
-			if (this.currentRoundTime.minutes === 0) {
-				this.resetCurrentRoundTime();
-				this.events.emit('newRoundStarted');
+		if (this.currentRoundTime.minutes === 0 && this.currentRoundTime.seconds === 0) {
+			this.resetCurrentRoundTime();
+			this.events.emit('newRoundStarted');
+			if (this.currentRoundTime.seconds === 0) {
+				this.currentRoundTime.minutes = this.currentRoundTime.minutes - 1;
+				this.currentRoundTime.seconds = 59;
+			} else {
+				this.currentRoundTime.seconds = this.currentRoundTime.seconds - 1;
 			}
+		} else if (this.currentRoundTime.seconds === 0) {
 			this.currentRoundTime.minutes = this.currentRoundTime.minutes - 1;
 			this.currentRoundTime.seconds = 59;
 		} else {
 			this.currentRoundTime.seconds = this.currentRoundTime.seconds - 1;
 		}
 		this.events.emit('timeUpdated', this.currentRoundTime);
+
+		if (this.currentRoundTime.minutes <= 1) {
+			this.events.emit('roundEndWarning', this.currentRoundTime);
+		} 
 	},
 	initializeBlinds: function() {
 		this.events.emit('blindsInitialized', this.blindsSchedule[this.currentBlindIndex]);
@@ -90,6 +99,7 @@ var Model =  {
 
 var View = {
 	dom: {
+		'timeRemainingColumn': document.querySelector('#TimeRemainingCol'),
 		'timeRemaining': document.querySelector('#TimeRemaining'),
 		'blindsSchedule': document.querySelector('#BlindsSchedule'),
 		'startBtn': document.querySelector('#StartBtn'),
@@ -102,6 +112,19 @@ var View = {
 	},
 	renderBlinds: function(currentBlinds) {
 		this.dom.blindsSchedule.innerHTML = currentBlinds.small + ' and ' + currentBlinds.big;
+	},
+	flashTimeRemaining: function(currentRoundTime) {
+		if (currentRoundTime.seconds % 2 === 0) {
+			this.dom.timeRemainingColumn.classList.remove('flash2');
+			this.dom.timeRemainingColumn.classList.add('flash1');
+		} else {
+			this.dom.timeRemainingColumn.classList.remove('flash1');
+			this.dom.timeRemainingColumn.classList.add('flash2');
+		}
+	},
+	removeTimeRemainingFlash: function() {
+		this.dom.timeRemainingColumn.classList.remove('flash1');
+		this.dom.timeRemainingColumn.classList.remove('flash2');
 	}
 };
 
@@ -113,6 +136,8 @@ var Controller = {
 		Model.events.on('timeUpdated', View.renderTimeRemaining.bind(View));
 		Model.events.on('newRoundStarted', Model.incrementCurrentBlind.bind(Model));
 		Model.events.on('blindsIncremented', View.renderBlinds.bind(View));
+		Model.events.on('roundEndWarning', View.flashTimeRemaining.bind(View));
+		Model.events.on('newRoundStarted', View.removeTimeRemainingFlash.bind(View));
 
 		Model.resetCurrentRoundTime();
 		Model.initializeTimeRemaining();
