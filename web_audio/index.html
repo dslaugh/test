@@ -1,0 +1,114 @@
+<html>
+	<head></head>
+	<body>
+		<div>
+			<input type="text" id="One" />
+			<button type="button" id="OneStartBtn">Start</button>
+			<button type="button" id="OneStopBtn">Stop</button>
+		</div>
+		<div>
+			<input type="text" id="Two" />
+			<button type="button" id="TwoStartBtn">Start</button>
+			<button type="button" id="TwoStopBtn">Stop</button>
+		</div>
+		<div>
+			<input type="text" id="Three" />
+			<button type="button" id="ThreeStartBtn">Start</button>
+			<button type="button" id="ThreeStopBtn">Stop</button>
+		</div>
+
+		<script>
+			var Model = {
+				audioCtx: new AudioContext(),
+				oscillatorOne: undefined,
+				oscillatorTwo: undefined,
+				oscillatorThree: undefined
+			};
+
+			var View = {
+				dom: {
+					'oneInput': document.querySelector('#One'),
+					'oneStartBtn': document.querySelector('#OneStartBtn'),
+					'oneStopBtn': document.querySelector('#OneStopBtn'),
+					'twoInput': document.querySelector('#Two'),
+					'twoStartBtn': document.querySelector('#TwoStartBtn'),
+					'twoStopBtn': document.querySelector('#TwoStopBtn'),
+					'threeInput': document.querySelector('#Three'),
+					'threeStartBtn': document.querySelector('#ThreeStartBtn'),
+					'threeStopBtn': document.querySelector('#ThreeStopBtn'),
+				},
+				bindUIElements: function() {
+					console.log(this.dom.oneStartBtn);
+					this.dom.oneStartBtn.addEventListener('click', Controller.startOne.bind(Controller));
+					this.dom.oneStopBtn.addEventListener('click', Controller.stopOne.bind(Controller));
+					this.dom.twoStartBtn.addEventListener('click', Controller.startTwo.bind(Controller));
+					this.dom.twoStopBtn.addEventListener('click', Controller.stopTwo.bind(Controller));
+					this.dom.threeStartBtn.addEventListener('click', Controller.startThree.bind(Controller));
+					this.dom.threeStopBtn.addEventListener('click', Controller.stopThree.bind(Controller));
+				}
+			};
+
+			var Controller = {
+				initialize: function() {
+					View.bindUIElements();
+				},
+				createOscillator: function(frequency) {
+					var oscillator = Model.audioCtx.createOscillator();
+					var gainNode = Model.audioCtx.createGain();
+					oscillator.connect(gainNode);
+					gainNode.connect(Model.audioCtx.destination);
+					oscillator.type = 'sine';
+					oscillator.frequency.value = frequency;
+					return oscillator;
+				},
+				startOne: function() {
+					if (View.dom.oneInput.value) {
+						var frequency = parseInt(View.dom.oneInput.value, 10);
+						Model.oscillatorOne = this.createOscillator(frequency);
+						Model.oscillatorOne.start();
+					} else {
+						alert('You must enter a frequency');
+					}
+				},
+				stopOne: function() {
+					if (Model.oscillatorOne) {
+						Model.oscillatorOne.stop();
+					}
+					Model.oscillatorOne = undefined;
+				},
+				startTwo: function() {
+					if (View.dom.twoInput.value) {
+						var frequency = parseInt(View.dom.twoInput.value, 10);
+						Model.oscillatorTwo = this.createOscillator(frequency);
+						Model.oscillatorTwo.start();
+					} else {
+						alert('You must enter a frequency');
+					}
+				},
+				stopTwo: function() {
+					if (Model.oscillatorTwo) {
+						Model.oscillatorTwo.stop();
+					}
+					Model.oscillatorTwo = undefined;
+				},
+				startThree: function() {
+					if (View.dom.threeInput.value) {
+						var frequency = parseInt(View.dom.threeInput.value, 10);
+						Model.oscillatorThree = this.createOscillator(frequency);
+						Model.oscillatorThree.start();
+					} else {
+						alert('You must enter a frequency');
+					}
+				},
+				stopThree: function() {
+					if (Model.oscillatorThree) {
+						Model.oscillatorThree.stop();
+					}
+					Model.oscillatorThree = undefined;
+				}
+			};
+			Controller.initialize();
+		</script>
+	</body>
+</html>
+
