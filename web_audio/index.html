@@ -62,6 +62,7 @@
 					return oscillator;
 				},
 				startOne: function() {
+					this.stopOne();
 					if (View.dom.oneInput.value) {
 						var frequency = parseInt(View.dom.oneInput.value, 10);
 						Model.oscillatorOne = this.createOscillator(frequency);
@@ -77,6 +78,7 @@
 					Model.oscillatorOne = undefined;
 				},
 				startTwo: function() {
+					this.stopTwo();
 					if (View.dom.twoInput.value) {
 						var frequency = parseInt(View.dom.twoInput.value, 10);
 						Model.oscillatorTwo = this.createOscillator(frequency);
@@ -92,6 +94,7 @@
 					Model.oscillatorTwo = undefined;
 				},
 				startThree: function() {
+					this.stopThree();
 					if (View.dom.threeInput.value) {
 						var frequency = parseInt(View.dom.threeInput.value, 10);
 						Model.oscillatorThree = this.createOscillator(frequency);
