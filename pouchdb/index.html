@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!-- https://www.sitepoint.com/getting-started-with-pouchdb/?utm_source=javascriptweekly&utm_medium=email -->
+<html>
+<head>
+	<title>PouchDB Testing</title>
+	<script src="https://cdn.jsdelivr.net/pouchdb/5.4.5/pouchdb.min.js"></script>
+</head>
+<body>
+	<ul id="Movies"></ul>
+
+<script>
+	var movies = new PouchDB('movies');
+
+	movies.info()
+	.then(function(info) {
+		console.log(info);
+	});
+
+	// Create a document
+	// movies.put({
+	// 	_id: 'tdkr',
+	// 	title: 'The Dark Knight Rises',
+	// 	director: 'Christopher Nolan'
+	// })
+	// .then(function (response) {
+	// 	console.log("Success", response)
+	// })
+	// .then(function (err) {
+	// 	console.log("Error", err)
+	// });
+	
+	// Update a document
+	// movies.get('tdkr')
+	// .then(function(doc) {
+	// 	doc.year = '2012';
+	// 	console.log(doc._rev);
+	// 	return movies.put(doc);
+	// })
+	// .then(function(res) {
+	// 	console.log(res);
+	// })
+	// .catch(function(err) {
+	// 	console.log('Updating error: ', err);
+	// });
+
+	// Delete a document
+	// movies.get('tdkr')
+	// .then(function(doc) {
+	// 	return movies.remove(doc);
+	// })
+	// .then(function(res) {
+	// 	console.log('Document deleted', res);
+	// })
+	// .catch(function(err) {
+	// 	console.log('Error deleting document', err);
+	// });
+
+	// The equivalent of using db.remove(doc)
+	// movies.get('tdkr')
+	// .then(function(doc) {
+	// 	doc._deleted = true;
+	// 	return movies.put(doc);
+	// })
+	// .then(function(res) {
+	// 	console.log('Document deleted', res);
+	// })
+	// .catch(function(err) {
+	// 	console.log('Error deleting document', err);
+	// });
+
+	// movies.get('tdkr')
+	// .then(function(movie) {
+	// 	console.log('movie doc:' , movie);
+	// })
+	// .catch(function(err) {
+	// 	console.log('Error getting movie: ', err);
+	// });
+
+	// Delete a database
+	// movies.destroy(); // returns a promise
+
+	// Bulk write
+	// movies.bulkDocs([
+	// 	{
+	// 		_id: 'easy-a',
+	// 		title: 'Easy A'
+	// 	},
+	// 	{
+	// 		_id: 'black-swan',
+	// 		title: 'Black Swan'
+	// 	}
+	// ])
+	// .then(function(res) {
+	// 	console.log('Bulk write successful ', res);
+	// })
+	// .catch(function(err) {
+	// 	console.log('Bulk write error ', err);
+	// });
+
+	// Bulk read
+	var moviesList = document.querySelector('#Movies');
+	movies.allDocs({include_docs: true})  // without {include_docs: true} only _id fields are returned
+	.then(function(docs) {
+		docs.rows.forEach(function(row) {
+			var movie = document.createElement('li');
+			movie.innerText = row.doc.title;
+			moviesList.appendChild(movie);
+		});
+		console.log('Read bulk docs ', docs);
+	})
+	.catch(function(err) {
+		var errorItem = document.createElement('li');
+		errorItem.innerText = 'Error reading movies';
+		moviesList.appendChild(errorItem);	
+		console.log('Error reading bulk docs', err);
+	});
+
+</script>
+</body>
+</html>
