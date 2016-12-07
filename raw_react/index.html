@@ -103,7 +103,10 @@
 			},
 			render: function() {
 				return (
-					React.createElement('form', {className: 'ContactForm'},
+					React.createElement('form', {
+							className: 'ContactForm',
+							onSubmit: this.onSubmit
+						},
 						React.createElement('input', {
 							type: 'text',
 							placeholder: 'Name (required)', 
@@ -123,6 +126,10 @@
 						}, 'Add Contact')
 					)
 				);
+			},
+			onSubmit: function(e) {
+				e.preventDefault();
+				console.log('form has been submitted', ContactView.props);
 			}
 		});
 
@@ -179,3 +186,4 @@
 	</script>
 </body>
 </html>
+
