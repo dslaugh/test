@@ -1,0 +1,25 @@
+<html>
+<head>
+	<title>Counter</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.0.4/redux.js"></script>
+</head>
+<body>
+	<script src="./counter.js"></script>
+	<script>
+		var { createStore } = Redux;
+		var store = createStore(counter);
+		var render = () => {
+			document.body.innerHTML = store.getState();
+		};
+
+		store.subscribe(render);
+		render();
+
+		document.addEventListener('click', () => {
+			store.dispatch({ type: 'INCREMENT' });
+		});
+		
+
+	</script>
+</body>
+</html>
