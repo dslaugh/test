@@ -2,16 +2,16 @@ function createStore(reducer) {
 	let state;
 	let listeners = [];
 
-	const getState() {
+	function getState() {
 		return state;
 	}
 
-	const dispatch(action) {
+	function dispatch(action) {
 		state = reducer(state, action);
 		listeners.forEach(listener => listener());
 	}
 
-	const subscribe(listener) {
+	function subscribe(listener) {
 		listeners.push(listener);
 		return () => {
 			listeners = listeners.filter(l => l !== listener);
