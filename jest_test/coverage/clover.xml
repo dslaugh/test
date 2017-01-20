@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1483735222899" clover="3.2.0">
+  <project timestamp="1483735222899" name="All files">
+    <metrics statements="19" coveredstatements="6" conditionals="4" coveredconditionals="0" methods="12" coveredmethods="4" elements="35" coveredelements="10" complexity="0" loc="19" ncloc="19" packages="1" files="7" classes="7">
+      <file name="ZipLocations.js" path="/Users/dslaugh/github_repos/testjs/jest_test/src/ZipLocations.js">
+        <metrics statements="4" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+      </file>
+      <file name="Ziplocations.js" path="/Users/dslaugh/github_repos/testjs/jest_test/src/Ziplocations.js">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+      </file>
+      <file name="getDB.js" path="/Users/dslaugh/github_repos/testjs/jest_test/src/getDB.js">
+        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+      </file>
+      <file name="request.js" path="/Users/dslaugh/github_repos/testjs/jest_test/src/request.js">
+        <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="5" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+      <file name="subtract.js" path="/Users/dslaugh/github_repos/testjs/jest_test/src/subtract.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="2" count="1" type="stmt"/>
+      </file>
+      <file name="sum.js" path="/Users/dslaugh/github_repos/testjs/jest_test/src/sum.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="2" count="1" type="stmt"/>
+      </file>
+      <file name="user.js" path="/Users/dslaugh/github_repos/testjs/jest_test/src/user.js">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="4" count="1" type="stmt"/>
+      </file>
+    </metrics>
+  </project>
+</coverage>
