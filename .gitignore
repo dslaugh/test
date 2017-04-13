@@ -2,3 +2,5 @@
 *.sublime-workspace
 **/node_modules
 **.DS_STORE
+**/.idea/**
+jest_test/coverage/clover.xml
