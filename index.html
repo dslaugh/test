@@ -7,6 +7,12 @@
 	<link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.14.0.css">
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.17.1/ramda.js"></script>
+	<script type="module">
+	import add from './chrome_canary_modules.js';
+
+	const x = add(1, 2);
+	console.log('1 + 2 = ', add(1, 2));
+	</script>
 	<style>
 		#main_container {
 			border: 1px solid #333;
